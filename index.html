@@ -1,0 +1,23 @@
+<!-- wm.html -->
+<html>
+<head>
+	<title> JMeter on the Web</title>
+	<script type="text/javascript" src="jmx.js"></script>
+	<script type="text/javascript">
+
+	function load (argument) {
+		var jmxDoc = parseXml("simpleplan.jmx");
+		var target = document.getElementById("editor");
+		displayNode(jmxDoc.documentElement, target);
+	}
+	</script>
+	<style type="text/css">
+		div {
+			padding-left: 5px;
+		}
+	</style>
+</head>
+<body onload="load()">
+	<div id="editor"></div>
+</body>
+</html>
