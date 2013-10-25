@@ -1,28 +1,30 @@
 //jmx.js
-// // from http://stackoverflow.com/a/8412989
 
-// var parseXml;
+function loadTemplates () {
+	//var head = document.getElementsByTagName("head")[0];
+	var tmplNode = document.getElementById("templates");
 
-// if (typeof window.DOMParser != "undefined") {
-//     parseXml = function(xmlStr) {
-//         return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
-//     };
-// } else if (typeof window.ActiveXObject != "undefined" &&
-//        new window.ActiveXObject("Microsoft.XMLDOM")) {
-//     parseXml = function(xmlStr) {
-//         var xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
-//         xmlDoc.async = "false";
-//         xmlDoc.loadXML(xmlStr);
-//         return xmlDoc;
-//     };
-// } else {
-//     throw new Error("No XML parser found");
-// }
+	loadTemplate(tmplNode,"tgTemplate","jmx.tmpl");
+}
 
-// from w3schools
-// http://www.w3schools.com/xml/xml_dom.asp
+var TEMPLATES = {};
 
-function parseXml(fileName){
+function loadTemplate (head,tid, tfn) {
+	var asynchttp = loadFile(tfn);
+	template = asynchttp.responseText;
+
+	TEMPLATES[tid] = template;
+}
+
+function loadJMXFile(node, fileName){
+	var xmlhttp = loadFile(fileName);
+	var jmxDoc=xmlhttp.responseXML;
+	var target = document.getElementById(node);
+	displayNode(jmxDoc.documentElement, target);
+}
+
+// adapted from http://www.w3schools.com/xml/xml_dom.asp
+function loadFile(fileName) {
 	if (window.XMLHttpRequest)
 	  {// code for IE7+, Firefox, Chrome, Opera, Safari
 	  	xmlhttp=new XMLHttpRequest();
@@ -33,11 +35,17 @@ function parseXml(fileName){
 	  }
 	xmlhttp.open("GET",fileName,false);
 	xmlhttp.send();
-	xmlDoc=xmlhttp.responseXML;
-	return xmlDoc;
+	return xmlhttp;
 }
 
-var aggregateHandler = function (node, displayLoc, config) {
+function displayNode(node, displayLoc){
+	var config = EDITORS[node.nodeName] || EDITORS["DEFAULT"];
+	var handler = config.handler;
+	handler(node, displayLoc, config);
+	displayLoc.model = node;
+}
+
+var genericHandler = function (node, displayLoc, config) {
 		var cfg = config || {
 			showName 		: true,
 			showAttrs		: true,
@@ -45,15 +53,28 @@ var aggregateHandler = function (node, displayLoc, config) {
 		};
 
 		var dispNode = document.createElement("div");
+		dispNode.setAttribute("class", "aggregate");
 		displayLoc.appendChild(dispNode);
 
 		if(cfg.showName) dispNode.appendChild(document.createTextNode(node.nodeName));
 		if(cfg.showAttrs) {
-			// handle display of attrs here
+			var dispAttrs = document.createElement("div");
+			dispAttrs.setAttribute("class", "aggregate_attrs");
+			dispNode.appendChild(dispAttrs);
+
+			var attrs = node.attributes;
+
+			for(var a = 0; a < attrs.length; a++){
+				var attr = attrs[a];
+				var dispANode = document.createElement("span");
+				dispANode.innerHTML = "<span>"+attr.nodeName+":"+attr.nodeValue+"</span>";
+				dispAttrs.appendChild(dispANode);
+			}
 		}
 		
 		if(cfg.showChildren){
 			var dispChildren = document.createElement("div");
+			dispChildren.setAttribute("class", "aggregate_children");
 			dispNode.appendChild(dispChildren);
 
 			var n = node.childNodes.length;
@@ -69,9 +90,8 @@ var aggregateHandler = function (node, displayLoc, config) {
 var boolHandler = function  (node, displayLoc) {
 		var nName = node.getAttribute("name");
 		var nVal = node.childNodes[0].nodeValue;
-		var view = '<span class="label">'+ nName +'</span><input type="radio" name="'+nName+'" value="'+nVal+'" checked>'+nVal+'</input>';
-		var oppVal = ( nVal == "true" )? "false" : "true";
-		view = view + '<input type="radio" name="'+nName+'" value="'+oppVal+'">'+oppVal+'</input>';
+		var checked = ( nVal == "true" )? "checked" : ""; 
+		var view = tmpl('<div> <span class="label"><%=nName%></span><input type="checkbox" name="<%=nName%>" value="<%=nVal%>" <%=checked%> ></input> </div>', {"nName": nName, "nVal": nVal, "checked": checked});
 		displayLoc.innerHTML = view;
 }
 
@@ -82,7 +102,7 @@ function getNodeValue(node){
 var stringHandler = function (node, displayLoc) {
 		var nName = node.getAttribute("name");
 		var nVal = getNodeValue(node);
-		var view = '<span class="label">'+ nName +'</span><input type="textbox" name="'+nName+'" value="'+nVal+'"></input>';
+		var view = tmpl('<div> <span class="label"> <%=nName%> </span><input type="textbox" name="<%=nName%>" value="<%=nVal%>"></input> </div>', {"nName": nName, "nVal": nVal});
 		displayLoc.innerHTML = view;
 }
 
@@ -94,27 +114,65 @@ var errorHandler = function(node, displayLoc){
 		displayLoc.innerHTML= "no handler for the node named \"" + node.nodeName + "\", type: " + node.nodeType;
 };
 
-var EDITORS = {
-	"jmeterTestPlan" 	: { handler: aggregateHandler, showName: true , showAttrs: true, showChildren: true },
-	"hashTree"			: { handler: aggregateHandler, showName: false, showAttrs: true, showChildren: true },
-	"TestPlan"			: { handler: aggregateHandler, showName: true , showAttrs: true, showChildren: true },
-	"ThreadGroup"		: { handler: aggregateHandler, showName: true , showAttrs: true, showChildren: true },
-	"ConfigTestElement"	: { handler: aggregateHandler, showName: true , showAttrs: true, showChildren: true },
-	"GenericController"	: { handler: aggregateHandler, showName: true , showAttrs: true, showChildren: true },
-	"HTTPSampler"		: { handler: aggregateHandler, showName: true , showAttrs: true, showChildren: true },
-	"GenericController"	: { handler: aggregateHandler, showName: true , showAttrs: true, showChildren: true },
-	"ResultCollector"	: { handler: aggregateHandler, showName: true , showAttrs: true, showChildren: true },
+function threadGroupHandler (node, displayLoc) {
 
-	"boolProp"			: { handler: boolHandler, showName: true },
-	"stringProp"		: { handler: stringHandler, showName: true },
-	"longProp"		: { handler: stringHandler, showName: true },		// long is a string for display purposes and to save to file. validation tbd
+	function createView (node, displayLoc) {
+
+		var viewData = {
+			"tgclass" 	: node.nodeName,
+			"tgname"	: node.getAttribute("testname"),
+			"comments"	: node.getAttribute("comments") || "",
+			"continue_forever" : getNodeValue(node.getElementsByTagName("elementProp")[0].getElementsByTagName("boolProp")[0]),
+			"loops" : getNodeValue(node.getElementsByTagName("elementProp")[0].getElementsByTagName("stringProp")[0])
+		};
+		
+		var strProps = node.getElementsByTagName("stringProp");
+
+		for(var i=0; i< strProps.length; i++){
+			var name = strProps[i].getAttribute("name").replace("\.","_");
+			var val = getNodeValue(strProps[i]);
+			viewData[name] = val;
+		}
+
+		var boolProps = node.getElementsByTagName("boolProp");
+
+		for(var i=0; i< boolProps.length; i++){
+			var name = boolProps[i].getAttribute("name").replace("\.","_");
+			var val = getNodeValue(boolProps[i]);
+			viewData[name] = val;
+		}
+
+		displayLoc.innerHTML = tmpl(TEMPLATES["tgTemplate"], viewData);			
+	}
+
+	function addEditControls () {
+		
+	}
+
+	createView(node, displayLoc);
+	addEditControls();
+	
+}
+
+var EDITORS = {
+	"jmeterTestPlan" 	: { handler: genericHandler, showName: true , showAttrs: true, showChildren: true },
+	"hashTree"			: { handler: genericHandler, showName: false, showAttrs: true, showChildren: true },
+	"TestPlan"			: { handler: genericHandler, showName: true , showAttrs: true, showChildren: true },
+	"ThreadGroup"		: { handler: threadGroupHandler, showName: true , showAttrs: true, showChildren: true },
+	"ConfigTestElement"	: { handler: genericHandler, showName: true , showAttrs: true, showChildren: true },
+	"GenericController"	: { handler: genericHandler, showName: true , showAttrs: true, showChildren: true },
+	"HTTPSampler"		: { handler: genericHandler, showName: true , showAttrs: true, showChildren: true },
+	"GenericController"	: { handler: genericHandler, showName: true , showAttrs: true, showChildren: true },
+	"ResultCollector"	: { handler: genericHandler, showName: true , showAttrs: true, showChildren: true },
+
+	"elementProp"		: { handler: genericHandler, showName: true , showAttrs: true, showChildren: true },
+	"objectProp"		: { handler: genericHandler, showName: true , showAttrs: true, showChildren: true },
+	"collectionProp"	: { handler: genericHandler, showName: true , showAttrs: true, showChildren: true },
+	"boolProp"			: { handler: boolHandler },
+	"stringProp"		: { handler: stringHandler },
+	"longProp"			: { handler: stringHandler },		// long is a string for display purposes and to save to file. validation tbd
 
 	"#text"				: { handler: nullHandler},
 	"DEFAULT"			: { handler: errorHandler}
 };
 
-function displayNode(node, displayLoc){
-	var config = EDITORS[node.nodeName] || EDITORS["DEFAULT"];
-	var handler = config.handler;
-	handler(node, displayLoc, config);
-}

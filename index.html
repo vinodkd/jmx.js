@@ -1,23 +1,20 @@
 <!-- wm.html -->
 <html>
 <head>
-	<title> JMeter on the Web</title>
+	<title> jmx.js - a Web-based Editor for JMeter's JMX file format</title>
+	<script type="text/javascript" src="template.js"></script>
 	<script type="text/javascript" src="jmx.js"></script>
 	<script type="text/javascript">
 
 	function load (argument) {
-		var jmxDoc = parseXml("simpleplan.jmx");
-		var target = document.getElementById("editor");
-		displayNode(jmxDoc.documentElement, target);
+		loadTemplates();
+		loadJMXFile("editor", "simpleplan.jmx")
 	}
 	</script>
-	<style type="text/css">
-		div {
-			padding-left: 5px;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="jmx.js.css"></link>	
 </head>
 <body onload="load()">
 	<div id="editor"></div>
+	<div id="templates"></div>
 </body>
 </html>
