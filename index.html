@@ -6,14 +6,21 @@
 	<script type="text/javascript" src="jmx.js"></script>
 	<script type="text/javascript">
 
+	var jmxDoc;
+
 	function load (argument) {
 		loadTemplates();
-		loadJMXFile("editor", "simpleplan.jmx")
+		jmxDoc = loadJMXFile("editor", "simpleplan.jmx")
+	}
+
+	function save () {
+		saveFile("http://localhost:8888/test.jmx",jmxDoc);
 	}
 	</script>
 	<link rel="stylesheet" type="text/css" href="jmx.js.css"></link>	
 </head>
 <body onload="load()">
+	<button onclick="save();">Save</button>
 	<div id="editor"></div>
 	<div id="templates"></div>
 </body>

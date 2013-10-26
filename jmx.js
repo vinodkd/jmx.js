@@ -21,6 +21,7 @@ function loadJMXFile(node, fileName){
 	var jmxDoc=xmlhttp.responseXML;
 	var target = document.getElementById(node);
 	displayNode(jmxDoc.documentElement, target);
+	return jmxDoc;
 }
 
 // adapted from http://www.w3schools.com/xml/xml_dom.asp
@@ -38,11 +39,29 @@ function loadFile(fileName) {
 	return xmlhttp;
 }
 
+function saveFile (url,doc) {
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  	xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	xmlhttp.open("PUT",url,false);
+	xmlhttp.send(doc);
+	return xmlhttp;
+}
+
+var VID=0;
+
 function displayNode(node, displayLoc){
 	var config = EDITORS[node.nodeName] || EDITORS["DEFAULT"];
 	var handler = config.handler;
-	handler(node, displayLoc, config);
+
+	displayLoc.id="jmx_" + (VID++);	
 	displayLoc.model = node;
+	handler(node, displayLoc, config);
 }
 
 var genericHandler = function (node, displayLoc, config) {
@@ -119,6 +138,7 @@ function threadGroupHandler (node, displayLoc) {
 	function createView (node, displayLoc) {
 
 		var viewData = {
+			"vid"		: displayLoc.id,
 			"tgclass" 	: node.nodeName,
 			"tgname"	: node.getAttribute("testname"),
 			"comments"	: node.getAttribute("comments") || "",
@@ -176,3 +196,9 @@ var EDITORS = {
 	"DEFAULT"			: { handler: errorHandler}
 };
 
+function changed (vid,ctrlName,value) {
+	var view = document.getElementById(vid);
+	var model = view.model;
+	alert("control:" + ctrlName +" changed, new value:" + value);
+	model.getElementsByTagName("elementProp")[0].getElementsByTagName("boolProp")[0].childNodes[0].nodeValue = value;
+}

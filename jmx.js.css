@@ -1,3 +1,7 @@
 div,span {
 	padding-left: 5px;
 }
+
+div.ThreadGroup_body {
+	border: lightblue 1px dashed;
+}
