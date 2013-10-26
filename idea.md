@@ -20,8 +20,12 @@ Design
 
 * index.html : Test app that embeds jmx.js
 * jmx.js : core code.
-* TBD: API exposed by jmow.js:
+* TBD: API exposed by jmx.js:
 ** `jmx.createOrEdit(fileURL, displayNode)` : The main api to create a jmx.js view.
 ** `jmx.show(nodeId)` : this will be used to sync views.
 ** `jmx.save()`: save the file back to the url. This requires write permissions on the server.
 
+Status
+------
+
+** Oct-26-2013 14:53 : **  Basic load-edit-save cycle working for one sample jmx file.
