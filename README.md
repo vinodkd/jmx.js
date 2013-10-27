@@ -12,8 +12,8 @@ Requirements/Goals
 * JS-only, so no server dependencies except for the source JMX files being stored on one.
 * As little dependencies as possible
 * Extensible so that:
-** adding new views of jmx content is easy
-** adding new jmx elements (as JMeter changes) is easy
+	* adding new views of jmx content is easy
+	* adding new jmx elements (as JMeter changes) is easy
 * Easily embedded into existing apps, especially JMeter runners such as CI tools.
 * Nice to have: allow two views: a tree view and an editor pane similar to the JMeter Swing UI, but couple them loosely so either one could be displayed or both.
 * Future: Fire off execution from within jmx.js. Not too keen to make this a full-fledged JMeter IDE, however. There are other tools that do this.
