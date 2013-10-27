@@ -2,22 +2,22 @@
 <html>
 <head>
 	<title> jmx.js - a Web-based Editor for JMeter's JMX file format</title>
-	<script type="text/javascript" src="template.js"></script>
-	<script type="text/javascript" src="jmx.js"></script>
+	<script type="text/javascript" src="lib/template.js"></script>
+	<script type="text/javascript" src="lib/jmx.js"></script>
 	<script type="text/javascript">
 
 	var jmxDoc;
 
 	function load (argument) {
 		loadTemplates();
-		jmxDoc = loadJMXFile("editor", "simpleplan.jmx")
+		jmxDoc = loadJMXFile("editor", "test/simpleplan.jmx")
 	}
 
 	function save () {
 		saveFile("http://localhost:8888/test.jmx",jmxDoc);
 	}
 	</script>
-	<link rel="stylesheet" type="text/css" href="jmx.js.css"></link>	
+	<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>	
 </head>
 <body onload="load()">
 	<button onclick="save();">Save</button>

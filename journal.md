@@ -50,4 +50,4 @@ now parent can map view child to model child and change the value.
 * move code from index.html to jmx.js
 * make the connection between loaded file name and saved file name correct. right now it reads from a known name and writes to another known name that is not the same.
 
-
+**Oct-27-2013 08:03 :** reorged the codebase with dirs.
