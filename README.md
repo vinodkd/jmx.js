@@ -38,4 +38,8 @@ Design/Curent Implementation
 Status
 ------
 
+See journal.md for the latest development status. Below is a list of high level milestones reached.
+
 ** Oct-26-2013 14:53 : **  Basic load-edit-save cycle working for one sample jmx file.
+
+
