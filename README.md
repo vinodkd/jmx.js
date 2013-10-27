@@ -26,14 +26,14 @@ Design/Curent Implementation
 * jmx.tmpl: templates for the views
 * jmx.js.css: css for the views
 * TBD: API exposed by jmx.js:
-** `jmx.createOrEdit(fileURL, displayNode)` : The main api to create a jmx.js view.
-** `jmx.show(nodeId)` : this will be used to sync views.
-** `jmx.save()`: save the file back to the url. This requires write permissions on the server.
+	* `jmx.createOrEdit(fileURL, displayNode)` : The main api to create a jmx.js view.
+	* `jmx.show(nodeId)` : this will be used to sync views.
+	* `jmx.save()`: save the file back to the url. This requires write permissions on the server.
 * dependencies
-** Jon Resig's simple template engine. Included in source as template.js. This can be changed to any other templating engine quite easily.
-*** template-debug.js is a debug version with slight modifications that makes it easy to debug errant templates
+	* Jon Resig's simple template engine. Included in source as template.js. This can be changed to any other templating engine quite easily.
+		* template-debug.js is a debug version with slight modifications that makes it easy to debug errant templates
 * Supporting component
-** webserver.js: a simple nodejs based web server that can do basic get,put and post required to test jmx.js. Can be replaced with a standard web server; PUT and POST support is expected, however.
+	* webserver.js: a simple nodejs based web server that can do basic get,put and post required to test jmx.js. Can be replaced with a standard web server; PUT and POST support is expected, however.
 
 Status
 ------
