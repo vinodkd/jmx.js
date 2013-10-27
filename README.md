@@ -1,17 +1,19 @@
 jmx.js - a Web-based editor for JMeter JMX Files
 ================================================
 
-This project aims to build a JMeter web UI. More specifically: a web-based editor for JMeter Test Plans. 
+This project aims to build a web-based UI for JMeter, or more specifically: a web-based editor for JMeter Test Plans. The idea is to enable editing of JMeter test plans without having a local JMeter install. This works out best in CI environments which are already setup for remote testing via JMeter's command line execution. It will also hopefully make JMeter more accessible to testers who might not want to have a local Java install and yet do performance testing.
 
-This essentially boils down to an editor for the JMX file format. This project aims to create such an editor that will work on any browser. It will allow creating, updating and saving JMX files.
+Building a JMeter web UI essentially boils down to building an editor for the JMX file format. This project therefore aims to create such an editor that will work on any browser. It will allow creating, updating and saving JMX files.
 
 Requirements/Goals
 ------------------
 
 * Web based
-* JS-mostly, so no server dependencies except for the source JMX files being stored on one.
+* JS-only, so no server dependencies except for the source JMX files being stored on one.
 * As little dependencies as possible
-* Extensible
+* Extensible so that:
+** adding new views of jmx content is easy
+** adding new jmx elements (as JMeter changes) is easy
 * Easily embedded into existing apps, especially JMeter runners such as CI tools.
 * Nice to have: allow two views: a tree view and an editor pane similar to the JMeter Swing UI, but couple them loosely so either one could be displayed or both.
 * Future: Fire off execution from within jmx.js. Not too keen to make this a full-fledged JMeter IDE, however. There are other tools that do this.
