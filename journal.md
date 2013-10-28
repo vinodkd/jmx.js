@@ -51,3 +51,15 @@ now parent can map view child to model child and change the value.
 * make the connection between loaded file name and saved file name correct. right now it reads from a known name and writes to another known name that is not the same.
 
 **Oct-27-2013 08:03 :** reorged the codebase with dirs.
+
+**Oct-28-2013 07:59 :** Now that the prototype is working, this is the worklist:
+
+* DONE fix basic issues with working prototype, ie, fix the undefined problem
+	* it was my mistake; i didnt initialize dataToSave, so when the actual data was appended an undefind was obviously at the front of the result string.
+* put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
+	* implement xpath-ish.js for this.
+* implement the views for all elements in jmx and add event handlers for them all
+* make the editor for each type of value a plugin, ie, dates should have a date picker, longs should have validation, etc.
+* put in controls for adding new child elements. thankfully this is only at the top level, so it should be easy enough.
+* change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
+* add ability to start a new jmx file.

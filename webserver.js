@@ -1,7 +1,8 @@
 var http = require("http"),
     url = require("url"),
     path = require("path"),
-    fs = require("fs")
+    fs = require("fs"),
+    qs = require("querystring");
     port = process.argv[2] || 8888;
 
 http.createServer(function(request, response) {
@@ -61,9 +62,8 @@ function handlePut (request,response,filename) {
 }
 
 function saveFile(request,response,filename) {
-  var dataToSave;
+  var dataToSave="";
   request.on('data', function(data) {
-    console.log(data + ">>>>");
     dataToSave += data;
     if(dataToSave.length > 1e6) {
         dataToSave = "";
