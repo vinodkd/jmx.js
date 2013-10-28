@@ -56,6 +56,7 @@ now parent can map view child to model child and change the value.
 
 * DONE fix basic issues with working prototype, ie, fix the undefined problem
 	* it was my mistake; i didnt initialize dataToSave, so when the actual data was appended an undefind was obviously at the front of the result string.
+* make a clear map from jmx field -> xml dom -> view control -> xml dom -> saved jmx file.
 * put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
 	* implement xpath-ish.js for this.
 * implement the views for all elements in jmx and add event handlers for them all
@@ -63,3 +64,67 @@ now parent can map view child to model child and change the value.
 * put in controls for adding new child elements. thankfully this is only at the top level, so it should be easy enough.
 * change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
 * add ability to start a new jmx file.
+
+**Oct-28-2013 17:26 :** mapping jmx field -> xml dom -> view control -> xml dom -> saved jmx file: There are a couple of design decisions:
+
+1. How to identify jmx elements and not their attributes which also are xml nodes? Ans: jmx doesnt have unique ids for each node. there could be two threadgroups with the same name, so i have to store the ref to the dom node and use that for update. 
+2. How to reach individual attributes within the jmx elements? Ans: create an xpath syntax to locate the attributes and map them to unique names. This is the xpath-ish idea (see below). Once implemented, this can be used to get and set values
+3. How to detect changes in the view? Ans: in the template, add unique ids to each control `= data field's unique name + seq number`. Also add a class denoting the type of attribute (`boolProp`, `stringProp` etc). After the view is built, collect all elements with each known data type and add an appropriate listener to it. In the listener, use xpath-ish to get set the value of the data field.
+4. How to map allowed children for the top level elements, specifically `TestPlan` and `ThreadGroup`? Ans: create a config for each element. 
+
+All of the above can be consolidated into one structure per element that has:
+	* `childElements`: a list of names of allowed child elements which will have their own configs.
+	* `attributes`: a map of attribute names and their xpath-ish expressions
+	* `template` : name of a template that displays this element
+All of this could be a json file that is loaded, or a separate js file that assigns to a global variable.
+
+xpath-ish idea
+--------------
+node
+node.attrs() - proper array to index into if known
+node.attrs("name").get/set - find and get/set
+node.attr("name").get()
+node.attr("name").set(value)
+
+node.children() - proper array
+node.children("name") - proper array
+node.child("name").get()
+node.child.("name").set(value)
+
+partial list of child elements
+------------------------------
+logic controller
+	for each
+	if
+	include
+	interleave
+	loop
+	module
+	only once
+	random
+	random order
+	recording
+	runtime
+	simple
+	skip errors
+	switch
+	throughput
+	transaction
+	while
+config element
+	counter
+	csv data set config
+	ftp request defaults
+	http authorization manager
+	http cache manager
+	http cookie manager
+	http header manager
+	http request defaults
+	java request defaults
+	jdbc connection configurations
+timer
+pre processor
+sampler
+post processor
+assertions
+listeners
