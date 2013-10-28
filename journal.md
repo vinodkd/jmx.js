@@ -69,14 +69,15 @@ now parent can map view child to model child and change the value.
 
 1. How to identify jmx elements and not their attributes which also are xml nodes? Ans: jmx doesnt have unique ids for each node. there could be two threadgroups with the same name, so i have to store the ref to the dom node and use that for update. 
 2. How to reach individual attributes within the jmx elements? Ans: create an xpath syntax to locate the attributes and map them to unique names. This is the xpath-ish idea (see below). Once implemented, this can be used to get and set values
-3. How to detect changes in the view? Ans: in the template, add unique ids to each control `= data field's unique name + seq number`. Also add a class denoting the type of attribute (`boolProp`, `stringProp` etc). After the view is built, collect all elements with each known data type and add an appropriate listener to it. In the listener, use xpath-ish to get set the value of the data field.
+3. How to detect changes in the view? Ans: in the template, add unique ids to each control `= data field's unique name + seq number`. Also add a class denoting the type of attribute (`boolProp`, `stringProp` etc). After the view is built, collect all elements with each known data type and add an appropriate listener to it. In the listener, use data type to attach an appropriate editor if required and the xpath-ish to get/set the value of the data field.
 4. How to map allowed children for the top level elements, specifically `TestPlan` and `ThreadGroup`? Ans: create a config for each element. 
 
 All of the above can be consolidated into one structure per element that has:
 	* `childElements`: a list of names of allowed child elements which will have their own configs.
-	* `attributes`: a map of attribute names and their xpath-ish expressions
+	* `attributes`: a map with logical attribute names as keys and a tuple of their xpath-ish expressions and data type as values.
 	* `template` : name of a template that displays this element
-All of this could be a json file that is loaded, or a separate js file that assigns to a global variable.
+All of this could be a json file that is loaded, or a separate js file that assigns to a global variable called `ELEMENTS`. 
+Editors for each datatype could be put into the current `EDITORS` global variable.
 
 xpath-ish idea
 --------------
