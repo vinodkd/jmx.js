@@ -64,18 +64,21 @@ now parent can map view child to model child and change the value.
 * put in controls for adding new child elements. thankfully this is only at the top level, so it should be easy enough.
 * change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
 * add ability to start a new jmx file.
+* move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
+* Make `save` automatic with asnychrony - web worker maybe?
 
 **Oct-28-2013 17:26 :** mapping jmx field -> xml dom -> view control -> xml dom -> saved jmx file: There are a couple of design decisions:
 
-1. How to identify jmx elements and not their attributes which also are xml nodes? Ans: jmx doesnt have unique ids for each node. there could be two threadgroups with the same name, so i have to store the ref to the dom node and use that for update. 
+1. How to identify jmx elements and not their attributes which also are xml nodes? Ans: jmx doesnt have unique ids for each node. there could be two threadgroups with the same name, so i have to store the ref to the dom node in the view and use that for update. 
 2. How to reach individual attributes within the jmx elements? Ans: create an xpath syntax to locate the attributes and map them to unique names. This is the xpath-ish idea (see below). Once implemented, this can be used to get and set values
 3. How to detect changes in the view? Ans: in the template, add unique ids to each control `= data field's unique name + seq number`. Also add a class denoting the type of attribute (`boolProp`, `stringProp` etc). After the view is built, collect all elements with each known data type and add an appropriate listener to it. In the listener, use data type to attach an appropriate editor if required and the xpath-ish to get/set the value of the data field.
-4. How to map allowed children for the top level elements, specifically `TestPlan` and `ThreadGroup`? Ans: create a config for each element. 
+4. How to map allowed children for the top level elements, specifically `TestPlan` and `ThreadGroup`? Ans: create a config for each element; use the config to created an "add child here..." control, which will upon being activated create a new child node and call displayNode on it. So we might need a blank xml template for each element.
 
 All of the above can be consolidated into one structure per element that has:
 	* `childElements`: a list of names of allowed child elements which will have their own configs.
 	* `attributes`: a map with logical attribute names as keys and a tuple of their xpath-ish expressions and data type as values.
-	* `template` : name of a template that displays this element
+	* `view` : name of a view template that displays this element
+	* `model`: xml that reprsents a new element of this type
 All of this could be a json file that is loaded, or a separate js file that assigns to a global variable called `ELEMENTS`. 
 Editors for each datatype could be put into the current `EDITORS` global variable.
 
@@ -129,3 +132,5 @@ sampler
 post processor
 assertions
 listeners
+
+**Oct-28-2013 23:03 :** update: dont need to implement xpath-ish; `document.evaluate()` is the answer.
