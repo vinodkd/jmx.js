@@ -14,7 +14,7 @@
         <hashTree>
             <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Jakarta Users" enabled="true">
                 <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-                    <boolProp name="LoopController.continue_forever">false</boolProp>
+                    <boolProp name="LoopController.continue_forever">true</boolProp>
                     <stringProp name="LoopController.loops">1</stringProp>
                 </elementProp>
                 <stringProp name="ThreadGroup.num_threads">1</stringProp>

@@ -78,6 +78,7 @@ All of the above can be consolidated into one structure per element that has:
 	* `childElements`: a list of names of allowed child elements which will have their own configs.
 	* `attributes`: a map with logical attribute names as keys and a tuple of their xpath-ish expressions and data type as values.
 	* `view` : name of a view template that displays this element
+	* `show`: name of the function that shows the view
 	* `model`: xml that reprsents a new element of this type
 All of this could be a json file that is loaded, or a separate js file that assigns to a global variable called `ELEMENTS`. 
 Editors for each datatype could be put into the current `EDITORS` global variable.
@@ -134,3 +135,7 @@ assertions
 listeners
 
 **Oct-28-2013 23:03 :** update: dont need to implement xpath-ish; `document.evaluate()` is the answer.
+
+**Nov-01-2013 01:00 :** Learnt something about xpath today: you cannot convert a string like `false` into a boolean value easily. So i took the shortcut of reading a string value and converting it to boolean in js.
+
+OTHERWISE mapped the element `ThreadGroup` to its view and controls. Now need to set unique names for the controls and add listeners to them.
