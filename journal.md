@@ -69,9 +69,9 @@ now parent can map view child to model child and change the value.
 
 **Oct-28-2013 17:26 :** mapping jmx field -> xml dom -> view control -> xml dom -> saved jmx file: There are a couple of design decisions:
 
-1. How to identify jmx elements and not their attributes which also are xml nodes? Ans: jmx doesnt have unique ids for each node. there could be two threadgroups with the same name, so i have to store the ref to the dom node in the view and use that for update. 
-2. How to reach individual attributes within the jmx elements? Ans: create an xpath syntax to locate the attributes and map them to unique names. This is the xpath-ish idea (see below). Once implemented, this can be used to get and set values
-3. How to detect changes in the view? Ans: in the template, add unique ids to each control `= data field's unique name + seq number`. Also add a class denoting the type of attribute (`boolProp`, `stringProp` etc). After the view is built, collect all elements with each known data type and add an appropriate listener to it. In the listener, use data type to attach an appropriate editor if required and the xpath-ish to get/set the value of the data field.
+1. How to identify jmx elements and not their attributes which also are xml nodes? Ans: jmx doesnt have unique ids for each node. there could be two threadgroups with the same name, so i have to store the ref to the dom node in the view and use that for update. DONE
+2. How to reach individual attributes within the jmx elements? Ans: create an xpath syntax to locate the attributes and map them to unique names. This is the xpath-ish idea (see below). Once implemented, this can be used to get and set values. DONE
+3. How to detect changes in the view? Ans: in the template, add unique ids to each control `= data field's unique name + seq number` - DONE FOR THREADGROUP. Also add a class denoting the type of attribute (`boolProp`, `stringProp` etc). After the view is built, collect all elements with each known data type and add an appropriate listener to it. In the listener, use data type to attach an appropriate editor if required and the xpath-ish to get/set the value of the data field.
 4. How to map allowed children for the top level elements, specifically `TestPlan` and `ThreadGroup`? Ans: create a config for each element; use the config to created an "add child here..." control, which will upon being activated create a new child node and call displayNode on it. So we might need a blank xml template for each element.
 
 All of the above can be consolidated into one structure per element that has:
@@ -136,6 +136,14 @@ listeners
 
 **Oct-28-2013 23:03 :** update: dont need to implement xpath-ish; `document.evaluate()` is the answer.
 
-**Nov-01-2013 01:00 :** Learnt something about xpath today: you cannot convert a string like `false` into a boolean value easily. So i took the shortcut of reading a string value and converting it to boolean in js.
+**Nov-01-2013 01:00 :** Learnt something about xpath today: you cannot convert a string like `false` into a boolean value easily. http://stackoverflow.com/questions/346226/how-to-create-a-boolean-value-in-xslt. So i took the shortcut of reading a string value and converting it to boolean in js.
 
 OTHERWISE mapped the element `ThreadGroup` to its view and controls. Now need to set unique names for the controls and add listeners to them.
+
+**Nov-01-2013 08:32 :**  Learnt some more about document.evaluate: by default the xxxValue properties are read-only. So this makes the xpaths useless for writing. The trick is to use `XPathResult..ORDERED_NODE_ITERATOR_TYPE` and `iterateNext()` to get the actual node, and then use `nodeValue` to set it. This is what I'll use to set the value when its changed. Some sample scripts from dev tools:
+
+		var r= document.evaluate(attr.path, node, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE,null)
+		var v = r.iterateNext()
+		v.childNodes[0]="blah"	// doesnt work cos childnodes[0] is an object
+		v.childNodes[0].nodeValue	// prints the value out.
+		v.childNodes[0].nodeValue="blah" 	// finally sets it
