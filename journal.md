@@ -147,3 +147,6 @@ OTHERWISE mapped the element `ThreadGroup` to its view and controls. Now need to
 		v.childNodes[0]="blah"	// doesnt work cos childnodes[0] is an object
 		v.childNodes[0].nodeValue	// prints the value out.
 		v.childNodes[0].nodeValue="blah" 	// finally sets it
+
+**Nov-02-2013 06:14 :** Current state: jmx has been mapped to dom correctly. dom is mapped to a view correctly for threadgroups. each attribute under threadgroup is mapped via an xpath to its model value and displayed. each displayed value is editable in an appropriate html control (except date/time which is still editable as text). each editable STRING value can be saved back to the model. the model itself can be saved to a fixed file name on the server.
+There are still a lot of todos but this commit represents a good chunk of progress on the worklist from Oct-28-2013 17:26
