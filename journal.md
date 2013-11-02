@@ -150,3 +150,5 @@ OTHERWISE mapped the element `ThreadGroup` to its view and controls. Now need to
 
 **Nov-02-2013 06:14 :** Current state: jmx has been mapped to dom correctly. dom is mapped to a view correctly for threadgroups. each attribute under threadgroup is mapped via an xpath to its model value and displayed. each displayed value is editable in an appropriate html control (except date/time which is still editable as text). each editable STRING value can be saved back to the model. the model itself can be saved to a fixed file name on the server.
 There are still a lot of todos but this commit represents a good chunk of progress on the worklist from Oct-28-2013 17:26
+
+**Nov-02-2013 06:36 :** All types of Thread group attrs are now minimally editable. numbers dont yet have validations and time is not a custom editor, but each value is individually editable.

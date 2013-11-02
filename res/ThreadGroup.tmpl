@@ -10,7 +10,8 @@
 		</div>
 		<div>
 			<div>Action to be taken after a sampler error</div>
-			<input type="radio" name="onSampleError" value="C" <%=(onSampleError=='continue'? "checked" : "" )%> onclick=updateValue(id,"onSampleError", "sntl") >Continue</input>
+			<!-- TODO: put in correct values instead of C, STNL etc -->
+			<input type="radio" name="onSampleError" value="C" <%=(onSampleError=='continue'? "checked" : "" )%> >Continue</input>
 			<input type="radio" name="onSampleError" value="SNTL" <%=(onSampleError=='start next'? "checked" : "" )%> >Start Next Thread Loop</input>
 			<input type="radio" name="onSampleError" value="ST" <%=(onSampleError=='stop'? "checked" : "" )%> >Stop Thread</input>
 			<input type="radio" name="onSampleError" value="STest" <%=(onSampleError=='stop test'? "checked" : "" )%> >Stop Test</input>
@@ -26,7 +27,7 @@
 			</div>
 		</div>
 		<div>
-			<span>Loop Count</span> <input type="checkbox" name="contForever" value="" <%=(contForever==true ? "checked" : "")%> onclick="changed('<%=vid%>',this.name,this.checked);" ></input> <span>Forever</span>
+			<span>Loop Count</span> <input type="checkbox" name="contForever" value="" <%=(contForever==true ? "checked" : "")%> ></input> <span>Forever</span>
 			<input type="textbox" name="loops" value="<%=loops%>"></input>
 		</div>
 		<div> <input type="checkbox" value="" name="delayThreadCreation"></input> <span>Delay Thread Creation until needed</span></div>
