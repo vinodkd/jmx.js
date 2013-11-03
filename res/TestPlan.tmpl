@@ -1,0 +1,61 @@
+<!--
+	Rules: All input elements must be enclosed in a form
+	all resources must be referenced relative to res 
+ -->
+<div class="<%=elementType%>_body" >
+	<form>
+		<img src="res/beaker.gif"/>
+		<!-- <span>TestPlan</span> -->
+		<div class="strProp">
+			<span class="label">Name</span><input type="textbox" name="name" value="<%=name%>"></input>
+		</div>
+		<div class="strProp">
+			<span class="label">Comments</span><input type="textbox" name="comments" value="<%=comments%>"></input>
+		</div>		
+		<div>
+			<div>User Defined Variables</div>
+			<!-- TODO: handle tables -->
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th><th>Value</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<span>
+				<input type="button" name="Add" value="Add"></input>
+				<input type="button" name="Delete" value="Delete"></input>
+			</span>
+		</div>
+		<div> <input type="checkbox" value="" name="serializeThreadGroups"></input> <span>Run ThreadGroups consecutively (ie, run groups one at a time)</span></div>
+		<div> 
+			<input type="checkbox" value="" name="functionalMode"></input> <span>Functional Test Mode (ie, save Response and Sampler Data)</span>
+			<div>Selecting Functional Mode may adversely affect performance</div>
+		</div>
+			<div class="strProp">
+				<span class="label">User Defined Class path</span><input type="textbox" name="userDefinedClassPath" value="<%=userDefinedClassPath%>"></input>
+			</div>
+			<div>
+				<!-- TODO: handle tables -->
+				<span>
+					<span>Add directory or jar to classpath </span>
+					<input type="button" name="Browse" value="Browse..."></input>
+					<input type="button" name="Delete" value="Delete"></input>
+					<input type="button" name="Clear" value="Clear"></input>
+				</span>
+				<table>
+					<thead>
+						<tr>
+							<th>Library</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+
+		<div>
+	</form>
+</div>
