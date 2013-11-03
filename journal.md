@@ -56,9 +56,9 @@ now parent can map view child to model child and change the value.
 
 * DONE fix basic issues with working prototype, ie, fix the undefined problem
 	* it was my mistake; i didnt initialize dataToSave, so when the actual data was appended an undefind was obviously at the front of the result string.
-* make a clear map from jmx field -> xml dom -> view control -> xml dom -> saved jmx file.
-* put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
-	* implement xpath-ish.js for this.
+* DONE make a clear map from jmx field -> xml dom -> view control -> xml dom -> saved jmx file.
+* DONE put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
+	* NOT REQUIRED implement xpath-ish.js for this.
 * implement the views for all elements in jmx and add event handlers for them all
 * make the editor for each type of value a plugin, ie, dates should have a date picker, longs should have validation, etc.
 * put in controls for adding new child elements. thankfully this is only at the top level, so it should be easy enough.
@@ -66,6 +66,10 @@ now parent can map view child to model child and change the value.
 * add ability to start a new jmx file.
 * move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
 * Make `save` automatic with asnychrony - web worker maybe?
+* Update readme with instructions on how to setup and embed into app
+* Add design doc explaining the solution - use notes from journl for it.
+* Setup a demo on gh-pages
+
 
 **Oct-28-2013 17:26 :** mapping jmx field -> xml dom -> view control -> xml dom -> saved jmx file: There are a couple of design decisions:
 
@@ -152,3 +156,23 @@ OTHERWISE mapped the element `ThreadGroup` to its view and controls. Now need to
 There are still a lot of todos but this commit represents a good chunk of progress on the worklist from Oct-28-2013 17:26
 
 **Nov-02-2013 06:36 :** All types of Thread group attrs are now minimally editable. numbers dont yet have validations and time is not a custom editor, but each value is individually editable.
+
+**Nov-03-2013 06:41 :** Done with the mapping work. Remaining work is:
+
+* 5d - put in controls for adding new child elements. thankfully this is only at the top level, so it should be easy enough.
+* 5d - implement the views for all elements in jmx and add event handlers for them all
+* 1d - change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
+* 3d - add ability to start a new jmx file.
+* 2d - move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
+* 5d - update css and make it look pretty
+* 1d - Update readme with instructions on how to setup and embed into app
+* 2d - Add design doc explaining the solution - use notes from journl for it.
+* 2d - Setup a demo on gh-pages
+
+Total ask for v1.0 of jmx.js: 25d = 1+ months.
+
+Next version:
+* 5d - make the editor for each type of value a plugin, ie, dates should have a date picker, longs should have validation, etc.
+* 5d - Make `save` automatic with asnychrony - web worker maybe?
+
+**Nov-03-2013 07:08 :** Also need to do special handling for specific node types: Arguments (tables of NV pairs)
