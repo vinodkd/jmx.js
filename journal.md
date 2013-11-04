@@ -176,3 +176,5 @@ Next version:
 * 5d - Make `save` automatic with asnychrony - web worker maybe?
 
 **Nov-03-2013 07:08 :** Also need to do special handling for specific node types: Arguments (tables of NV pairs)
+
+**Nov-04-2013 05:13 :** Added the ability to expand/collapse each element on a whim. Isnt that what personal projects are for :)? I did mean to do it anyway, except it wasnt on the list above.

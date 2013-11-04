@@ -1,7 +1,27 @@
+* {
+	font-family: arial;
+}
 div,span,table {
 	padding-left: 5px;
 }
 
 div.ThreadGroup, div.TestPlan {
 	border: lightblue 1px dashed;
+}
+
+img.icon {
+	display: inline;
+}
+
+.jmxType {
+	font-family: verdana;
+	font-variant: small-caps;
+}
+
+.expanded {
+	display: block;
+}
+
+.collapsed {
+	display: none;
 }

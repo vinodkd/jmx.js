@@ -4,34 +4,38 @@
  -->
 <div class="<%=elementType%>" >
 	<form>
-		<img src="res/thread.gif"/>
-		<!-- <span>ThreadGroup</span> -->
-		<div class="strProp">
+		<div class="strProp headline">
+			<img src="res/thread.gif"/>
+			<span class="jmxType">ThreadGroup</span>
 			<span class="label">Name</span><input type="textbox" name="elementName" value="<%=elementName%>"></input>
+			<a href="#" class="expander" onclick="expandOrCollapse(this.parentElement.nextElementSibling);"> ... </a>
 		</div>
-		<div>
-			<div>Action to be taken after a sampler error</div>
-			<!-- TODO: put in correct values instead of C, STNL etc -->
-			<input type="radio" name="onSampleError" value="C" <%=(onSampleError=='continue'? "checked" : "" )%> >Continue</input>
-			<input type="radio" name="onSampleError" value="SNTL" <%=(onSampleError=='start next'? "checked" : "" )%> >Start Next Thread Loop</input>
-			<input type="radio" name="onSampleError" value="ST" <%=(onSampleError=='stop'? "checked" : "" )%> >Stop Thread</input>
-			<input type="radio" name="onSampleError" value="STest" <%=(onSampleError=='stop test'? "checked" : "" )%> >Stop Test</input>
-			<input type="radio" name="onSampleError" value="STN" <%=(onSampleError=='stop test now'? "checked" : "" )%> >Stop Test Now</input>
-		</div>
-		<div>
-			<div>Thread Properties</div>
-			<div class="strProp">
-				<span class="label">Number of Threads(users)</span><input type="textbox" name="numThreads" value="<%=numThreads%>"></input>
+		<div class="body collapsed">
+			<div>
+				<div>Action to be taken after a sampler error</div>
+				<!-- TODO: put in correct values instead of C, STNL etc -->
+				<input type="radio" name="onSampleError" value="C" <%=(onSampleError=='continue'? "checked" : "" )%> >Continue</input>
+				<input type="radio" name="onSampleError" value="SNTL" <%=(onSampleError=='start next'? "checked" : "" )%> >Start Next Thread Loop</input>
+				<input type="radio" name="onSampleError" value="ST" <%=(onSampleError=='stop'? "checked" : "" )%> >Stop Thread</input>
+				<input type="radio" name="onSampleError" value="STest" <%=(onSampleError=='stop test'? "checked" : "" )%> >Stop Test</input>
+				<input type="radio" name="onSampleError" value="STN" <%=(onSampleError=='stop test now'? "checked" : "" )%> >Stop Test Now</input>
 			</div>
-			<div class="strProp">
-				<span class="label">Ramp-Up period (in seconds)</span><input type="textbox" name="rampTime" value="<%=rampTime%>"></input>
+			<div>
+				<div>Thread Properties</div>
+				<div class="strProp">
+					<span class="label">Number of Threads(users)</span><input type="textbox" name="numThreads" value="<%=numThreads%>"></input>
+				</div>
+				<div class="strProp">
+					<span class="label">Ramp-Up period (in seconds)</span><input type="textbox" name="rampTime" value="<%=rampTime%>"></input>
+				</div>
 			</div>
+			<div>
+				<span>Loop Count</span> <input type="checkbox" name="contForever" value="" <%=(contForever==true ? "checked" : "")%> ></input> <span>Forever</span>
+				<input type="textbox" name="loops" value="<%=loops%>"></input>
+			</div>
+			<div> <input type="checkbox" value="" name="delayThreadCreation"></input> <span>Delay Thread Creation until needed</span></div>
+			<div> <input type="checkbox" value="" name="scheduler" <%=(scheduler==true ? "checked" : "")%> ></input> <span>Scheduler</span> </div>
+
 		</div>
-		<div>
-			<span>Loop Count</span> <input type="checkbox" name="contForever" value="" <%=(contForever==true ? "checked" : "")%> ></input> <span>Forever</span>
-			<input type="textbox" name="loops" value="<%=loops%>"></input>
-		</div>
-		<div> <input type="checkbox" value="" name="delayThreadCreation"></input> <span>Delay Thread Creation until needed</span></div>
-		<div> <input type="checkbox" value="" name="scheduler" <%=(scheduler==true ? "checked" : "")%> ></input> <span>Scheduler</span> </div>
 	</form>
 </div>
