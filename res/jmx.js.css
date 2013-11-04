@@ -5,6 +5,10 @@ div,span,table {
 	padding-left: 5px;
 }
 
+form{
+	margin: 0;
+}
+
 div.ThreadGroup, div.TestPlan {
 	border: lightblue 1px dashed;
 }
