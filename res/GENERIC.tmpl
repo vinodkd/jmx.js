@@ -1,0 +1,13 @@
+<div class="jmxElement <%=elementType%>" >
+	<form>
+		<div class="strProp headline">
+			<img class="icon" src="res/feather.gif"/>
+			<span class="jmxType"><%=elementType%></span>
+			<span class="label">Name</span><input type="textbox" name="name" value="<%=name%>"></input>
+			<a href="#" class="expander" onclick="expandOrCollapse(this.parentElement.nextElementSibling);"> ... </a>
+		</div>
+		<div class="body collapsed">
+			<div class="<%=elementType%>_children"></div>
+		</div>
+	</form>
+</div>

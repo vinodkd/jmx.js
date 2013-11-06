@@ -178,3 +178,17 @@ Next version:
 **Nov-03-2013 07:08 :** Also need to do special handling for specific node types: Arguments (tables of NV pairs)
 
 **Nov-04-2013 05:13 :** Added the ability to expand/collapse each element on a whim. Isnt that what personal projects are for :)? I did mean to do it anyway, except it wasnt on the list above.
+**Nov-04-2013 10:03 :** i need to support 3 different ideas with the view attribute:
+
+* refer to an inline template
+* refer to an external template by name, where name = element name, in which case I dont want to give the name.
+* refer to an external template by name, where name != element name, in which case I DO want to give the name.
+
+currently `view` handles the inline template, presence of `attrs` plus lack of any `template` handles the second case and presence of `template` handles the third case.
+
+But now i want to support elements that dont have attrs and still have a view template. This is the problem. fixed it using this logic:
+there's only one attr: `view`. 
+if its false, the element doesnt have a view
+if its undefined, the element has a view that's external and named after the element
+if its "GENERIC", the element has a generic external view named GENERIC.tmpl
+if its some other string, the element has an inline view template.
