@@ -192,3 +192,55 @@ if its false, the element doesnt have a view
 if its undefined, the element has a view that's external and named after the element
 if its "GENERIC", the element has a generic external view named GENERIC.tmpl
 if its some other string, the element has an inline view template.
+
+**Nov-04-2013 16:48 :** New problem: Just realized that hashtree is actually a set of parent, children pairs. So, for example, in simpleplan.jmx:
+
+	jmeterTestPlan: Hashtree of:
+		parent: TestPlan
+		child: Hashtree of:
+			parent: ThreadGroup
+			child: Hashtree of:
+				ConfigTestElement
+				Generic Controller ..Ant pages...
+				Generic Controller .. log4j pages...
+				ResultCollector
+
+So handling hashtrees has to be a either a modification to processChildren() or writing an actual template for hashtree. However it looks pretty ok even now becuase the current logic adds a div for hashtree anyway and that indents its children. However the children do not fold away when the parent is collapsed.
+
+After thinking about it a bit more, I think this is the best approach:
+
+* make the `processChildren` attr calculated, ie, if there's an element called nodename_children in the view, children have to be processed.
+* remove the attr therefore. this simplifies the config as well
+
+**Nov-06-2013 08:36 :** Made changes to have templates for hashtree and jmtertestplan now there's a lot of noise. need to make a headless template for both those nodes.
+
+**Nov-06-2013 18:35 :**  Fixed the noise but there's still an issue: Hashtrees are weird. Within a hashtree element, every set of two elements are parent+child. So the tree above really is:
+
+	jmeterTestPlan: Hashtree of:
+		parent: TestPlan
+		child: Hashtree of:
+			parent: ThreadGroup
+			child: Hashtree of:
+				ConfigTestElement
+				hashtree/
+				Generic Controller ..Ant pages...
+				hashtree/
+				Generic Controller .. log4j pages...
+				hashtree/
+				ResultCollector
+				hashtree/
+
+So it seems like the right way to process a hashtree's children is to deal with each of them in pairs. I'm planning to change the config to accept a function instead of a xpath so that getAttrValue() can run it to get the result.
+
+**Nov-06-2013 18:48 :**  Trying the above idea now. Stuck on how to convert a function name into a function ref. Need internet access for this, so stopping now. TO BE PICKED UP NEXT TIME.
+
+**Nov-07-2013 03:18 :** Got that working. Also changed a lot of code in createView() and processChildren() to accomodate hashTree. Better be worth it. The code now can handle templates that have placeholders for content instead of just replacing what was there before in the target dom node.
+
+**Nov-07-2013 04:06 :** To handle hashtree here're the changes made:
+* first thought to move away from processChildren: true, but now still retaining it.
+* also added: the ability to decide whether to processchildren based on whether a elementtype_children node is present in view
+* added vid back to be able to differentiate each of hashtrees children uniquely
+* added the ability to replace not the whole displayloc node, but a part of its innerhtml, identified by the nodecontents class. this is used now in hashtree, but should be available to any template
+* added ability to declare a function that returns the data values for the view instead of just an xpath and type. this is also used only for hashtree right now.
+* added hashtree.tmpl that uses all these features
+
