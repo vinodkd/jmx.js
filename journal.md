@@ -178,6 +178,7 @@ Next version:
 **Nov-03-2013 07:08 :** Also need to do special handling for specific node types: Arguments (tables of NV pairs)
 
 **Nov-04-2013 05:13 :** Added the ability to expand/collapse each element on a whim. Isnt that what personal projects are for :)? I did mean to do it anyway, except it wasnt on the list above.
+
 **Nov-04-2013 10:03 :** i need to support 3 different ideas with the view attribute:
 
 * refer to an inline template
@@ -244,3 +245,17 @@ So it seems like the right way to process a hashtree's children is to deal with 
 * added ability to declare a function that returns the data values for the view instead of just an xpath and type. this is also used only for hashtree right now.
 * added hashtree.tmpl that uses all these features
 
+**Nov-07-2013 04:13 :**  Changing the expand/collapse logic to work with the tree view correctly. Might need to split up the expansion of the node's attrs from the expansion of its children. Tried an implementation with both conflated, didnt like it.
+
+**Nov-09-2013 07:01 :**  Fixed issues with display of hashtree:
+
+* corrected logic that set ids for chilcren to use 2n+1 numbering when looping through pairs
+* changed the location of the expander toggle so that its next to the parent, but refers to the child
+* added logic to not show the + when there is no content in the child, ie its a <hashTree/>
+* changed the + to a ">" and "^" combo with the view changing depending on whether the node is expanded or collapsed
+
+Because of all this, the rules for templates are becoming longer:
+
+* They must have a div and a form.
+* to have a parent element's template allocate a specific location for a child's contents, use a `<div class="nodecontents"></div>`
+* If they're using expanders for children, the order must be `<div class="toggle"> <div class="nodecontents"></div><div> .. child .. </div>` where the nodecontents div stands for the parent element.

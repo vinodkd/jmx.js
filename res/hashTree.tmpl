@@ -5,11 +5,19 @@
 			var pair = pcpairs[i];
 			var pnode = pair[0];
 			var cnode = pair[1];
+			var cnodeEmpty = cnode.childNodes.length == 0;
 		%>
-			<div id="<%=vid%>_child_<%=i%>" >
-				<div class="nodecontents"></div>
-				<div id="<%=vid%>_child_<%=(i+1)%>" >
-				</div>	
+			<div id="<%=vid%>_child_<%=(2*i)%>" >
+				<% if(!cnodeEmpty) { %>
+					<div class="toggle toggleChildren"> ^ </div> 
+					<div class="nodecontents"></div>
+					<div id="<%=vid%>_child_<%=(2*i+1)%>" class="expanded"></div>
+				<% }
+				   else{
+				%>
+					<div class="nodecontents"></div>
+				<%
+				   } %>
 			</div>
 		<%
 		}

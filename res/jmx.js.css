@@ -3,7 +3,7 @@
 	font-size: 14px;
 }
 div,span,table {
-	padding-left: 5px;
+	padding-left: 3px;
 	margin: 0;
 }
 
@@ -30,4 +30,19 @@ img.icon {
 
 .collapsed {
 	display: none;
+}
+
+.toggle {
+	font-weight: bold;
+	font-size: 16px;
+	color: blue;
+	cursor: pointer;
+}
+
+.toggleChildren {
+	float: left;
+}
+
+.nodecontents {
+	float: right;
 }
