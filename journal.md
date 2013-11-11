@@ -259,3 +259,5 @@ Because of all this, the rules for templates are becoming longer:
 * They must have a div and a form.
 * to have a parent element's template allocate a specific location for a child's contents, use a `<div class="nodecontents"></div>`
 * If they're using expanders for children, the order must be `<div class="toggle"> <div class="nodecontents"></div><div> .. child .. </div>` where the nodecontents div stands for the parent element.
+**Nov-11-2013 16:33 :**  Got things to work in ff with some minor fixes.
+
