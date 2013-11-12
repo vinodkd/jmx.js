@@ -259,5 +259,13 @@ Because of all this, the rules for templates are becoming longer:
 * They must have a div and a form.
 * to have a parent element's template allocate a specific location for a child's contents, use a `<div class="nodecontents"></div>`
 * If they're using expanders for children, the order must be `<div class="toggle"> <div class="nodecontents"></div><div> .. child .. </div>` where the nodecontents div stands for the parent element.
+
 **Nov-11-2013 16:33 :**  Got things to work in ff with some minor fixes.
 
+**Nov-11-2013 16:34 :**  IE is a whole nother ball game. xml.documentElement doesnt work unless the server returns the content type. I fixed this with help from https://groups.google.com/forum/#!topic/google-ajax-discuss/VzJPHnMfX3U, and changing webserver.js
+
+getElementByClassName doesnt work now.
+
+**Nov-12-2013 08:27 :** On a wild goose chase to reimplement everything without getlementbyclassname now. this is irritating. almost everything is ok except leaving a placeholder div in the parent elements view for the child to find and plop itself into. with classes, it was easy because the scope is the node itself and there's only one element with the class `nodecontents`. with ids, the scope is the document, so i have to create a unique id for the placeholder div and later find it from within createview. the unique id can be created as parent_child_index, but for createview to find it later is not possible. need to think of something else or stop pursuing this approach and go back to an ie shim.
+
+**Nov-12-2013 17:02 :**  Tried a lot to get IE working; giving up. Last problem encountered: XPathResult is not supported, so I have to use selectSingleNode. But there seems to be no way to easily check if that exists either, so giving up.
