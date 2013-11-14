@@ -269,3 +269,5 @@ getElementByClassName doesnt work now.
 **Nov-12-2013 08:27 :** On a wild goose chase to reimplement everything without getlementbyclassname now. this is irritating. almost everything is ok except leaving a placeholder div in the parent elements view for the child to find and plop itself into. with classes, it was easy because the scope is the node itself and there's only one element with the class `nodecontents`. with ids, the scope is the document, so i have to create a unique id for the placeholder div and later find it from within createview. the unique id can be created as parent_child_index, but for createview to find it later is not possible. need to think of something else or stop pursuing this approach and go back to an ie shim.
 
 **Nov-12-2013 17:02 :**  Tried a lot to get IE working; giving up. Last problem encountered: XPathResult is not supported, so I have to use selectSingleNode. But there seems to be no way to easily check if that exists either, so giving up.
+
+**Nov-13-2013 08:08 :** Idea: change GENERIC.tmpl such that it allows the node to be edited raw as xml. This will allow release of the editor without support for all nodes.
