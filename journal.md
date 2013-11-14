@@ -271,3 +271,14 @@ getElementByClassName doesnt work now.
 **Nov-12-2013 17:02 :**  Tried a lot to get IE working; giving up. Last problem encountered: XPathResult is not supported, so I have to use selectSingleNode. But there seems to be no way to easily check if that exists either, so giving up.
 
 **Nov-13-2013 08:08 :** Idea: change GENERIC.tmpl such that it allows the node to be edited raw as xml. This will allow release of the editor without support for all nodes.
+
+**Nov-13-2013 19:13 :**  Added basic support for child elements , ie, added a config.create.children element that lists the children allowed and used that to put buttons on the element's view. Now need to figure out the right way to proceed. In general, an element's children might have different cardinality:
+
+* 0 : which makes no sense
+* 1 : only one of this is allowed, eg, jmetertestplan/TestPlan
+* n : where only n are allowed
+* * : where 0 or more are allowed
+* + : where 1 or more are allowed
+
+So i should have an attr for cardinality where either a number or '+' and '*' are allowed, and interpret need to add the control based on existing count.
+
