@@ -282,3 +282,20 @@ getElementByClassName doesnt work now.
 
 So i should have an attr for cardinality where either a number or '+' and '*' are allowed, and interpret need to add the control based on existing count.
 
+**Nov-15-2013 08:20 :**  working out logic to support cardinality:
+
+if the limit is 	x 	nodes, and there are 	y nodes already, i should check for less'n 	z
+					0 							0 											1
+					1 							0 											2
+					1 							1 											2
+					2 							0 											3
+					2 							1 											3
+					2 							2 											3
+					+ 							0 						 allow it, but ensure that the parents model has this child built in to it??
+					+ 							1 						 allow it
+					* 							0 						 allow it
+					* 							1+ 						 allow it.
+so in general, if the limit is a number, i should check for less than the number+1.
+
+**Nov-15-2013 17:37 :**  Also figured out that teh check for child should be via hashtree, not the node's child elements. hashTree sucks.
+
