@@ -299,3 +299,9 @@ so in general, if the limit is a number, i should check for less than the number
 
 **Nov-15-2013 17:37 :**  Also figured out that teh check for child should be via hashtree, not the node's child elements. hashTree sucks.
 
+**Nov-18-2013 16:38 :** Change in plans: I'm thinking its better to bring v1.0 out with just the ability to read and edit existing jmx files and add on the ability to create new files from scratch later. This will allow the primary use case of this editor to be delivered faster. I considered moving the code related to the create functionality to another branch, but to date this has been two things:
+
+* move all the configs into a `edit` subtree to make way for the `create` configs.
+* write `addCreateAffordances()`  and its subsequent functions.
+
+I want to keep the first change regardless of change in focus because the create code is coming later and it makes sense to add that structure now. So all I'm going to do now is to comment out calling `addCreateAffordances()`
