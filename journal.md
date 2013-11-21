@@ -305,3 +305,22 @@ so in general, if the limit is a number, i should check for less than the number
 * write `addCreateAffordances()`  and its subsequent functions.
 
 I want to keep the first change regardless of change in focus because the create code is coming later and it makes sense to add that structure now. So all I'm going to do now is to comment out calling `addCreateAffordances()`
+
+**Nov-18-2013 16:45 :** New plan:
+* DONE make a clear map from jmx field -> xml dom -> view control -> xml dom -> saved jmx file.
+* DONE put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
+	* NOT REQUIRED implement xpath-ish.js for this.
+* implement the "edit raw" view for all elements that use the GENERIC template
+* change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
+* move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
+* Update readme with instructions on how to setup and embed into app
+* Add design doc explaining the solution - use notes from journl for it.
+* Setup a demo on gh-pages
+
+Removed:
+* implement the views for all elements in jmx and add event handlers for them all
+* make the editor for each type of value a plugin, ie, dates should have a date picker, longs should have validation, etc.
+* put in controls for adding new child elements. thankfully this is only at the top level, so it should be easy enough.
+* add ability to start a new jmx file.
+* Make `save` automatic with asnychrony - web worker maybe?
+
