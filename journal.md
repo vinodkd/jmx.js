@@ -324,3 +324,11 @@ Removed:
 * add ability to start a new jmx file.
 * Make `save` automatic with asnychrony - web worker maybe?
 
+**Nov-21-2013 08:23 :** Trying to implement the "edit raw" feature. This has led to some refactoring of the GENERIC template. The new meaning is:
+
+	GENERIC = DEFAULT_ELEMENT
+	DEFAULT = DEFAULT_NODE
+
+I had the names in the right for a brief time, but felt it bled the implementation detail into the config. Since the plan is for the config to be its own file at some point in the future, it makes sense to keep it in the language of describing the jmx elements and their views. From that sense, `GENERIC` is a generic, catch-all template for all elements that the configurer doesnt care yet to prescribe a template, while default is the "system-default" template for any child node that the configurer doesnt care yet.
+
+**Nov-21-2013 08:31 :**  implemented view for edit raw. need to add save capability next.
