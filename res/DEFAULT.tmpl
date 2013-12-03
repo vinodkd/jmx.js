@@ -1,18 +1,18 @@
-<div class="jmxElement <%=elementType%>" >
+<div class="jmxElement <%=name%>" >
 	<form>
 		<div class="strProp headline">
 			<img class="icon" src="res/feather.gif"/>
-			<span class="jmxType"><%=elementType%></span>
+			<span class="jmxType"><%=name%></span>
 			No handler for the node named <span class="jmxType"> <%=name%> </span>.
 			<span class="toggle toggleAttrs"> Edit Raw... </span>
 		</div>
 		<div class="body collapsed">
 		<%
-		if(elementContent != ""){
-			var scrubbedContent = elementContent.replace(/"/g,"'");
+		if(value != ""){
+			var scrubbedContent = value.replace(/"/g,"'");
 			/* TODO: SET ROWS BELOW TO NUMBER OF LINES IN CONTENT */
 			%>
-			<textarea width="100%" cols="100" rows="20" name="elementContent"><%=scrubbedContent%></textarea>
+			<textarea width="100%" cols="100" rows="20" name="value"><%=scrubbedContent%></textarea>
 			<%
 		}
 		%>

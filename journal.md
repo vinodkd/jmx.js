@@ -332,3 +332,27 @@ Removed:
 I had the names in the right for a brief time, but felt it bled the implementation detail into the config. Since the plan is for the config to be its own file at some point in the future, it makes sense to keep it in the language of describing the jmx elements and their views. From that sense, `GENERIC` is a generic, catch-all template for all elements that the configurer doesnt care yet to prescribe a template, while default is the "system-default" template for any child node that the configurer doesnt care yet.
 
 **Nov-21-2013 08:31 :**  implemented view for edit raw. need to add save capability next.
+
+**Nov-25-2013 09:32 :**  Working on the save piece, implemented xmlChanged(), but updateModel thinks the template is GENERIC instead of DEFAULT. Need to figure that out.
+Ans: the problem was me nesting a form element inside another form element. GENERIC already had an enclosing form on top of which DEFAULT was trying to create an inner form for objProp. This would result in the inner form getting eaten up. So now I've moved GENERIC's children div out of the form. This causes the problem of eventhandlers not working right.
+
+**Nov-26-2013 08:20 :** Need to generalize the way the eventhandlers reach the view node to expand or collapse. Right now its all relative pathing, which will easily break if someone creates a template that doesnt obey the implicit rules in the code. new logic should be:
+
+	- look in ancestor path for a div with jmxElement in its classes
+	- from that node, look for a child that has body in its classes.
+
+tbd after i figure out if the saving xml works.
+
+**Nov-26-2013 08:29 :**  Also need to change toggleAttrs to toggleBody
+
+**Nov-26-2013 18:24 :**  WAS WORKING ON TRYING TO DELETE XML FROM THE NODE AND ADDING NEW. NOT WORKING YET.
+
+**Nov-27-2013 08:09 :**  Delete works now, but writing new value still needs work. use the xml parsing in the browser, luke.
+
+**Dec-03-2013 08:16 :** Got xml update to work as well. I'd changed the node  used in expandorcollapse to get the editraw link to work and that had caused the ... link to break, but now it seems to magically work. this might come back to bite later.
+The logic in comment from nov 26 above needs to be implemented, but will check-in edit raw code for now.
+
+**Dec-03-2013 08:20 :** Some major changes were made with this feature:
+
+* the model ref is now not directly tied to the path from the ctrl, but easily accessible from the form's parent
+* a template's children can be outside the form. specifically, if you expect your children to have forms of their own, do not include them in your form.
