@@ -356,3 +356,26 @@ The logic in comment from nov 26 above needs to be implemented, but will check-i
 
 * the model ref is now not directly tied to the path from the ctrl, but easily accessible from the form's parent
 * a template's children can be outside the form. specifically, if you expect your children to have forms of their own, do not include them in your form.
+
+**Dec-03-2013 08:22 :** Pending todos:
+* DONE make a clear map from jmx field -> xml dom -> view control -> xml dom -> saved jmx file.
+* DONE put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
+	* NOT REQUIRED implement xpath-ish.js for this.
+* DONE implement the "edit raw" view for all elements that use the GENERIC template
+* DONE change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
+* move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
+* Update readme with instructions on how to setup and embed into app
+* Add design doc explaining the solution - use notes from journal for it.
+* Setup a demo on gh-pages
+
+Removed:
+* implement the views for all elements in jmx and add event handlers for them all
+* make the editor for each type of value a plugin, ie, dates should have a date picker, longs should have validation, etc.
+* put in controls for adding new child elements. thankfully this is only at the top level, so it should be easy enough.
+* add ability to start a new jmx file.
+* Make `save` automatic with asnychrony - web worker maybe?
+
+**Dec-05-2013 08:31 :**  Almost got the abstraction of file names done. jmxwithargs is not working.
+
+**Dec-05-2013 09:06 :**  Figure out that jmxwithargs was not working bcos of a syntax error.
+

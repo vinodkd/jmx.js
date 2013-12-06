@@ -9,9 +9,14 @@
 
 	var jmxDoc;
 
-	function load (argument) {
+	function load () {
 		loadTemplates();
-		jmxDoc = loadJMXFile("editor", "test/simpleplan.jmx")
+		jmxDoc = loadJMXFile("editor", "test/simpleplan.jmx");
+	}
+
+	function loadSelection (sel) {
+		var fileName = sel.options[sel.selectedIndex].value;
+		jmxDoc = loadJMXFile("editor", "test/" + fileName);
 	}
 
 	function save () {
@@ -21,7 +26,14 @@
 	<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>	
 </head>
 <body onload="load()">
-	<button onclick="save();">Save</button>
+	<div>
+		<select onchange="loadSelection(this)">
+			<option value="simpleplan.jmx" selected>simpleplan</option>
+			<option value="blank.jmx">blank</option>
+			<option value="jmxwithargs.jmx">jmxwithargs</option>
+		</select>
+		<button onclick="save();">Save</button>
+	</div>
 	<div id="editor"></div>
 </body>
 </html>
