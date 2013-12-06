@@ -391,3 +391,10 @@ Removed:
 * remove hardcoding of save to test.jmx and make it optional for demo purposes (maybe add a demo config)
 * Setup a demo on gh-pages
 
+**Dec-06-2013 17:02 :**  internal todos for moving code to SEAF:
+
+* DONE move all code into SEAF
+* move the element config to its on json file that is loaded in run time. That way it can have its own life
+* move user defined functions to their own file - same reason as above.
+* refactor again to move sub functions into their parents' scope. this seems much more readable than the "all level1 first, followed by all level 2" strategy that's currently in place
+* prettify the SEAF code - make it readable.

@@ -10,17 +10,17 @@
 	var jmxDoc;
 
 	function load () {
-		loadTemplates();
-		jmxDoc = loadJMXFile("editor", "test/simpleplan.jmx");
+		JMX.loadTemplates();
+		jmxDoc = JMX.loadJMXFile("editor", "test/simpleplan.jmx");
 	}
 
 	function loadSelection (sel) {
 		var fileName = sel.options[sel.selectedIndex].value;
-		jmxDoc = loadJMXFile("editor", "test/" + fileName);
+		jmxDoc = JMX.loadJMXFile("editor", "test/" + fileName);
 	}
 
 	function save () {
-		saveFile("http://localhost:8888/test.jmx",jmxDoc);
+		JMX.saveFile("http://localhost:8888/test.jmx",jmxDoc);
 	}
 	</script>
 	<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>	
