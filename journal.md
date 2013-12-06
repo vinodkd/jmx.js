@@ -379,3 +379,15 @@ Removed:
 
 **Dec-05-2013 09:06 :**  Figure out that jmxwithargs was not working bcos of a syntax error.
 
+**Dec-06-2013 08:06 :** Pending todos:
+* DONE make a clear map from jmx field -> xml dom -> view control -> xml dom -> saved jmx file.
+* DONE put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
+	* NOT REQUIRED implement xpath-ish.js for this.
+* DONE implement the "edit raw" view for all elements that use the GENERIC template
+* DONE change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
+* WIP move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
+* Update readme with instructions on how to setup and embed into app
+* Add design doc explaining the solution - use notes from journal for it.
+* remove hardcoding of save to test.jmx and make it optional for demo purposes (maybe add a demo config)
+* Setup a demo on gh-pages
+
