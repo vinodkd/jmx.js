@@ -394,7 +394,19 @@ Removed:
 **Dec-06-2013 17:02 :**  internal todos for moving code to SEAF:
 
 * DONE move all code into SEAF
-* move the element config to its on json file that is loaded in run time. That way it can have its own life
+* DONE move the element config to its on json file that is loaded in run time. That way it can have its own life
 * move user defined functions to their own file - same reason as above.
 * refactor again to move sub functions into their parents' scope. this seems much more readable than the "all level1 first, followed by all level 2" strategy that's currently in place
 * prettify the SEAF code - make it readable.
+
+**Dec-06-2013 17:43 :**  Started moving element config out. 404 now.
+
+**Dec-09-2013 17:51 :**  WAS STILL JSON-IZING JMXELEMENTS.JSON.
+
+**Dec-10-2013 16:58 :** Finished json-izing jmxelements.json. Needed to make more changes than expected:
+
+* changed jmx.js to now use loadfile to read the config as a json file
+* changed the whole file to use quoted keys instead of unquoted ones when it was inside jmx.js
+* realized that json spec doesnt allow comments, so created a simple shell script to strip them off
+* moved jmxelements.json to a newly created src dir and generate the version in lib using stripcomments.sh
+* changed webserver.sh to run stripcomments.sh every time its started. this is my simple "build script"
