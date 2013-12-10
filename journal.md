@@ -395,7 +395,7 @@ Removed:
 
 * DONE move all code into SEAF
 * DONE move the element config to its on json file that is loaded in run time. That way it can have its own life
-* move user defined functions to their own file - same reason as above.
+* DONE move user defined functions to their own file - same reason as above.
 * refactor again to move sub functions into their parents' scope. this seems much more readable than the "all level1 first, followed by all level 2" strategy that's currently in place
 * prettify the SEAF code - make it readable.
 
@@ -410,3 +410,7 @@ Removed:
 * realized that json spec doesnt allow comments, so created a simple shell script to strip them off
 * moved jmxelements.json to a newly created src dir and generate the version in lib using stripcomments.sh
 * changed webserver.sh to run stripcomments.sh every time its started. this is my simple "build script"
+
+**Dec-10-2013 17:11 :**  Next up: moving user functions into their own file. DONE: created viewfunctions.js and moved them there.
+Had to change index.html to use include this new js file.
+
