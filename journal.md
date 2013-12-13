@@ -420,3 +420,16 @@ Had to change index.html to use include this new js file.
 
 **Dec-12-2013 17:24 :**  Refactoring to move sub fns to parents done. Need to check if jmx.js:313 needs to be fixed. seems to be working even with xml and other elements now, so not sure. Either way that's another task. Checking in SEAF code now as done, therefore.
 
+**Dec-12-2013 17:26 :**  New task list:
+* DONE make a clear map from jmx field -> xml dom -> view control -> xml dom -> saved jmx file.
+* DONE put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
+	* NOT REQUIRED implement xpath-ish.js for this.
+* DONE implement the "edit raw" view for all elements that use the GENERIC template
+* DONE change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
+* DONE move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
+* Check if jmx.js:313 needs to be fixed.
+* Update readme with instructions on how to setup and embed into app
+* Add design doc explaining the solution - use notes from journal for it.
+* remove hardcoding of save to test.jmx and make it optional for demo purposes (maybe add a demo config)
+* Setup a demo on gh-pages
+
