@@ -12,16 +12,16 @@
 
 	function load () {
 		JMX.init();
-		jmxDoc = JMX.loadJMXFile("editor", "test/simpleplan.jmx");
+		jmxDoc = JMX.loadAndEdit("editor", "test/simpleplan.jmx");
 	}
 
 	function loadSelection (sel) {
 		var fileName = sel.options[sel.selectedIndex].value;
-		jmxDoc = JMX.loadJMXFile("editor", "test/" + fileName);
+		jmxDoc = JMX.loadAndEdit("editor", "test/" + fileName);
 	}
 
 	function save () {
-		JMX.saveFile("http://localhost:8888/test.jmx",jmxDoc);
+		JMX.save("http://localhost:8888/test.jmx",jmxDoc);
 	}
 	</script>
 	<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>	

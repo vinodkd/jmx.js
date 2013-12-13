@@ -396,8 +396,8 @@ Removed:
 * DONE move all code into SEAF
 * DONE move the element config to its on json file that is loaded in run time. That way it can have its own life
 * DONE move user defined functions to their own file - same reason as above.
-* refactor again to move sub functions into their parents' scope. this seems much more readable than the "all level1 first, followed by all level 2" strategy that's currently in place
-* prettify the SEAF code - make it readable.
+* DONE refactor again to move sub functions into their parents' scope. this seems much more readable than the "all level1 first, followed by all level 2" strategy that's currently in place
+* DONE prettify the SEAF code - make it readable.
 
 **Dec-06-2013 17:43 :**  Started moving element config out. 404 now.
 
@@ -413,4 +413,10 @@ Removed:
 
 **Dec-10-2013 17:11 :**  Next up: moving user functions into their own file. DONE: created viewfunctions.js and moved them there.
 Had to change index.html to use include this new js file.
+
+**Dec-11-2013 08:58 :** still in process of refactoring jmx.js to make it "flow" readability-wise.
+
+**Dec-12-2013 08:31 :** Still refactoring. Moved upto setEditor(). Deciding whether toggleAttrs/children needs to be moved in or not.
+
+**Dec-12-2013 17:24 :**  Refactoring to move sub fns to parents done. Need to check if jmx.js:313 needs to be fixed. seems to be working even with xml and other elements now, so not sure. Either way that's another task. Checking in SEAF code now as done, therefore.
 
