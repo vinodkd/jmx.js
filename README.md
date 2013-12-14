@@ -94,7 +94,7 @@ Note: The simplest indicator that an element is not yet mapped is that its view 
 Contributing
 ------------
 
-As might be obvious, jmx.js is still a work in progress. Detailed information on how the code is setup is available in the [Developer's Guide] ((devguide.md),  but I've tried to seperate out the customization points such that:
+As might be obvious, jmx.js is still a work in progress. Detailed information on how the code is setup is available in the [Developer's Guide](devguide.md),  but I've tried to seperate out the customization points such that:
 
 * If you're a **Designer**, you could help make jmx.js look better by changing the CSS alone. I've created the basic CSS and div structure framework but have not yet got it to look as pretty as I want it to in my head. The current look is very similar to how it it is in the Swing client and I think we can do way better than that.
 * If you're a **UI/UX Developer**, you could help change not just the CSS, but also some of the interaction controls and how they work. Most of this is isolated to a few functions (if not actually modular), so help tweaking that would be great. For example, Autosave (which the Swing UI has already) would be a nice feature to add; and should be easy considering save is already implemented.
