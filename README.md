@@ -89,6 +89,7 @@ Note: The simplest indicator that an element is not yet mapped is that its view 
 | Number | Minimally supported; there is no validation that the input is a number |
 | Time | Minimally supported; there is no validation that the input is a time value, nor is there an appropriate time picker |
 | Lists/Tables | Not started |
+| File URLs | Not started |
 | Any other type | Minimally supported with the "raw" mode |
 
 Contributing
