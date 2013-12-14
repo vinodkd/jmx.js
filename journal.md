@@ -446,3 +446,5 @@ Had to change index.html to use include this new js file.
 
 **Dec-14-2013 07:25 :** For some wierd reason everything other than HttpSampler.tmpl made it over to gh-pages fine. Trying out a trivial change so it might get pushed.
 
+**Dec-14-2013 08:03 :** Still trying to figure out how to get the demo working. gh-pages will not serve up tmpl as text it looks like, and i might have to rename the jmx files to .xml for them to work without a server config like in webserver.js.
+
