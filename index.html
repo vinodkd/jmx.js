@@ -12,7 +12,7 @@
 
 	function load () {
 		JMX.init();
-		jmxDoc = JMX.loadAndEdit("editor", "test/simpleplan.jmx");
+		jmxDoc = JMX.loadAndEdit("editor", "test/simpleplan.jmx.xml");
 	}
 
 	function loadSelection (sel) {
@@ -21,7 +21,7 @@
 	}
 
 	function save () {
-		JMX.save("http://localhost:8888/test.jmx",jmxDoc);
+		JMX.save("http://localhost:8888/test.jmx.xml",jmxDoc);
 	}
 	</script>
 	<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>	
@@ -29,9 +29,9 @@
 <body onload="load()">
 	<div>
 		<select onchange="loadSelection(this)">
-			<option value="simpleplan.jmx" selected>simpleplan</option>
-			<option value="blank.jmx">blank</option>
-			<option value="jmxwithargs.jmx">jmxwithargs</option>
+			<option value="simpleplan.jmx.xml" selected>simpleplan</option>
+			<option value="blank.jmx.xml">blank</option>
+			<option value="jmxwithargs.jmx.xml">jmxwithargs</option>
 		</select>
 		<button onclick="save();">Save</button>
 	</div>
