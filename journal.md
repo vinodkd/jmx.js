@@ -432,7 +432,7 @@ Had to change index.html to use include this new js file.
 * Add design doc explaining the solution - use notes from journal for it.
 	* Add note that controls must be 3 levels down from jmxelement.
 * remove hardcoding of save to test.jmx and make it optional for demo purposes (maybe add a demo config)
-* Setup a demo on gh-pages
+* WIP Setup a demo on gh-pages
 
 **Dec-13-2013 17:19 :**  Decided that I wont fix the issue with relative pathing until after v1.0 so that I can actually release this thing. Will add verbiage in the documentation that the controls must be 3 levels down.
 
@@ -441,3 +441,6 @@ Had to change index.html to use include this new js file.
 **Dec-14-2013 06:20 :** Update of readme done. I also created devguide.md to hold design and dev-related topics, as well as an issues.md to track issues. There might be more tweaks required to the readme for gh markup as well as content, but this is in good shape to commit.
 
 **Dec-14-2013 06:52 :** Just realized that unless people ran stripcomments.sh, the latest version of lib/jmxelements.json would not be picked up. I'd stopped committing jmxelements.json a few iterations ago because the source - src/jmxelements.json - was being checked in. Now I realize that for people who take a snapshot of the codebase, this might be an issue. Checking in the lib version, therefore.
+
+**Dec-14-2013 07:07 :**  Started working on the gh-pages task - out of turn. Going to create the branch and push one version to it before I stop and go back to the dev guide. Had to add a shell script to automate it tho :)
+
