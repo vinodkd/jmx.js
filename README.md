@@ -23,8 +23,8 @@ Status
 
 See `journal.md` for the latest development status. Below is a list of high level milestones reached.
 
-**Oct-26-2013 14:53 :** Basic load-edit-save cycle working for one sample jmx file.
-**Dec-13-2013 17:20 :** Relatively stable editor for JMX files with ability to edit elements that are not yet mapped in their raw form.
+* **Dec-13-2013 :** Relatively stable editor for JMX files with ability to edit elements that are not yet mapped in their raw form.
+* **Oct-26-2013 :** Basic load-edit-save cycle working for one sample jmx file.
 
 User Guide: Setup
 -----------------
@@ -40,13 +40,13 @@ User Guide: Setup
 2. Use `index.html` as an example of how to integrate it into your environment. `jmx.js` needs the following code in an html file:
 	a. The jmx.js library files:
 
-	<script type="text/javascript" src="lib/template.js"></script>
-	<script type="text/javascript" src="lib/viewfunctions.js"></script>
-	<script type="text/javascript" src="lib/jmx.js"></script>
+		<script type="text/javascript" src="lib/template.js"></script>
+		<script type="text/javascript" src="lib/viewfunctions.js"></script>
+		<script type="text/javascript" src="lib/jmx.js"></script>
 
 	b. The CSS file:
 
-	<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>
+		<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>
 
 	c. Calls `jmx.loadAndEdit()` and/or `jmx.save()` to load up a JMX file and save it respectively.
 3. The jmx files can reside anywhere accessible via a URL. Saving updated files requires the web server to be able to handle `PUT`s, however.
@@ -68,7 +68,8 @@ User Guide: JMX Element Coverage
 
 `jmx.js` is still a work in progress when it comes to mapping JMX Elements to UI Views. Here's the status by JMX Element:
 
-|| Element || Status ||
+| Element | Status |
+|---------|--------|
 | TestPlan | Done |
 | Hashtree | Done |
 | Thread Group | Done |
