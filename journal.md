@@ -457,7 +457,7 @@ Had to change index.html to use include this new js file.
 * DONE move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
 * WONTFIX Check if jmx.js:313 needs to be fixed.
 * DONE Update readme with instructions on how to setup and embed into app
-* Add design doc explaining the solution - use notes from journal for it.
+* WIP Add design doc explaining the solution - use notes from journal for it.
 	* Add note that controls must be 3 levels down from jmxelement.
 * remove hardcoding of save to test.jmx and make it optional for demo purposes (maybe add a demo config)
 * DONE Setup a demo on gh-pages

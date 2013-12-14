@@ -1,3 +1,28 @@
+Outline
+-------
+
+- Why this project
+- How it works
+	- parsing in the browser
+	- the mapping
+	- eventing
+	- save
+	- Rules for the templates
+	- Generic & Default templates
+	- hashTree craziness
+- Extension points
+	- Overall Look and Feel
+	- View Data
+	- View functions
+	- View templates
+	- Editors/Pickers
+	- Templating Engine
+- How to read the code
+	- Code organization
+	- Nested function style
+- Dev Setup
+- How to contribute
+
 Design/Curent Implementation
 ----------------------------
 
