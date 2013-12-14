@@ -49,7 +49,8 @@ User Guide: Setup
 
 		<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>
 
-	c. Calls `jmx.loadAndEdit()` and/or `jmx.save()` to load up a JMX file and save it respectively.
+	c. A div to hold the editor. In the demo, this is the div with the id "editor".
+	Now call `jmx.loadAndEdit()` and/or `jmx.save()` to load up a JMX file and save it respectively.
 3. Change your web server's configuration to pass appropriate MIME types for `*.jmx` and `res/*.tmpl`. These should be xml and text respectively. For the demo code, I've changed the jmx files to end in .xml s Github's web server serves them up correctly. you could leave your extensions as they were if you can coax your webserver to recognize them as xml and send the appropriate MIME type in its response.
 3. The jmx files can reside anywhere accessible via a URL. Saving updated files requires the web server to be able to handle `PUT`s, however.
 
