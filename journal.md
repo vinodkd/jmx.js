@@ -427,9 +427,15 @@ Had to change index.html to use include this new js file.
 * DONE implement the "edit raw" view for all elements that use the GENERIC template
 * DONE change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
 * DONE move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
-* Check if jmx.js:313 needs to be fixed.
-* Update readme with instructions on how to setup and embed into app
+* WONTFIX Check if jmx.js:313 needs to be fixed.
+* DONE Update readme with instructions on how to setup and embed into app
 * Add design doc explaining the solution - use notes from journal for it.
+	* Add note that controls must be 3 levels down from jmxelement.
 * remove hardcoding of save to test.jmx and make it optional for demo purposes (maybe add a demo config)
 * Setup a demo on gh-pages
 
+**Dec-13-2013 17:19 :**  Decided that I wont fix the issue with relative pathing until after v1.0 so that I can actually release this thing. Will add verbiage in the documentation that the controls must be 3 levels down.
+
+**Dec-13-2013 17:53 :**  Was filling out the User guide on coverage of JMX Elements.
+
+**Dec-14-2013 06:20 :** Update of readme done. I also created devguide.md to hold design and dev-related topics, as well as an issues.md to track issues. There might be more tweaks required to the readme for gh markup as well as content, but this is in good shape to commit.
