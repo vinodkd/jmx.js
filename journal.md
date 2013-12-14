@@ -444,3 +444,5 @@ Had to change index.html to use include this new js file.
 
 **Dec-14-2013 07:07 :**  Started working on the gh-pages task - out of turn. Going to create the branch and push one version to it before I stop and go back to the dev guide. Had to add a shell script to automate it tho :)
 
+**Dec-14-2013 07:25 :** For some wierd reason everything other than HttpSampler.tmpl made it over to gh-pages fine. Trying out a trivial change so it might get pushed.
+
