@@ -439,3 +439,5 @@ Had to change index.html to use include this new js file.
 **Dec-13-2013 17:53 :**  Was filling out the User guide on coverage of JMX Elements.
 
 **Dec-14-2013 06:20 :** Update of readme done. I also created devguide.md to hold design and dev-related topics, as well as an issues.md to track issues. There might be more tweaks required to the readme for gh markup as well as content, but this is in good shape to commit.
+
+**Dec-14-2013 06:52 :** Just realized that unless people ran stripcomments.sh, the latest version of lib/jmxelements.json would not be picked up. I'd stopped committing jmxelements.json a few iterations ago because the source - src/jmxelements.json - was being checked in. Now I realize that for people who take a snapshot of the codebase, this might be an issue. Checking in the lib version, therefore.

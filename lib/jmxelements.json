@@ -1,0 +1,149 @@
+
+
+
+{
+	"jmeterTestPlan" : {
+		"edit" 	: { "view" : false, "processChildren" : true}
+	},
+	"hashTree"	: {
+		"edit" :{
+			"attrs": {
+				"elementType" 			: { "path" : "name()" },
+				"pcpairs"				: {  "get" : "getPCPairs" }
+			}
+		}
+	},
+	"TestPlan"	: {
+		"edit" : {
+			"attrs": {
+				"name" 					: { "path" : "@testname"},
+				"elementType" 			: { "path" : "name()"  },
+				"functionalMode"		: { "path" : "boolProp[@name='TestPlan.functional_mode']" ,			"type" : "boolean"},
+
+				   
+				   
+				   
+
+				"serializeThreadGroups"	: { "path" : "boolProp[@name='TestPlan.serialize_threadgroups']" ,	"type" : "boolean"},
+				"comments"				: { "path" : "stringProp[@name='TestPlan.comments']" },
+				"userDefinedClassPath"	: { "path" : "stringProp[@name='TestPlan.user_define_classpath']" }
+			}
+		},
+		"create" 	: { "children" 	: { "name": "ThreadGroup", "allowed": "+" } , "model" : ""}
+	},
+	"ThreadGroup" : {
+		"edit" : {
+			"attrs":{
+				"elementName"			: { "path" : "@testname"  },		
+				"elementType" 			: { "path" : "name()"  },
+				"onSampleError"			: { "path" : "stringProp[@name='ThreadGroup.on_sample_error']" },
+				"numThreads"			: { "path" : "stringProp[@name='ThreadGroup.num_threads']" , 					"type" : "number"},
+				"rampTime"				: { "path" : "stringProp[@name='ThreadGroup.ramp_time']" , 						"type" : "time"},
+				"contForever" 			: { "path" : "elementProp/boolProp[@name='LoopController.continue_forever']" , 	"type" : "boolean"},
+				"loops" 				: { "path" : "elementProp/stringProp[@name='LoopController.loops']" , 			"type" : "number" },
+				"delayThreadCreation"	: { "path" : "" ,																"type" : "boolean"},
+				"scheduler"				: { "path" : "boolProp[@name='ThreadGroup.scheduler']" , 						"type" : "boolean"}
+
+			}
+		}
+	},
+	"HttpDefaultsGui"	: {
+		"edit" : {
+			"attrs" : {
+				"name" 					: { "path" : "@testname" },
+				"elementType" 			: { "path" : "@testclass"  },
+				"domain"				: { "path" : "stringProp[@name='HTTPSampler.domain']" },
+				"port"					: { "path" : "stringProp[@name='HTTPSampler.port']" },
+				"protocol"				: { "path" : "stringProp[@name='HTTPSampler.protocol']" },
+				"contentEncoding"		: { "path" : "stringProp[@name='HTTPSampler.contentEncoding']" },
+				"path"					: { "path" : "stringProp[@name='HTTPSampler.path']" }
+			}
+		}
+	},
+	"GenericController"	: {
+		"edit" : {
+			"attrs": {
+				"name" 					: { "path" : "@testname" },
+				"elementType" 			: { "path" : "name()"  }
+			},
+			"view": "GENERIC"
+		}
+	},
+	"HTTPSampler"		: {
+		"edit" : {
+			"attrs" : {
+				"name" 					: { "path" : "@testname" },
+				"elementType" 			: { "path" : "name()"  },
+				"domain"				: { "path" : "stringProp[@name='HTTPSampler.domain']" },
+				"port"					: { "path" : "stringProp[@name='HTTPSampler.port']" },
+				"protocol"				: { "path" : "stringProp[@name='HTTPSampler.protocol']" },
+				"contentEncoding"		: { "path" : "stringProp[@name='HTTPSampler.contentEncoding']" },
+				"path"					: { "path" : "stringProp[@name='HTTPSampler.path']" },
+
+				"followRedirects"		: { "path" : "boolProp[@name='HTTPSampler.follow_redirects']" , 	"type" : "boolean"},
+				"autoRedirects"			: { "path" : "boolProp[@name='HTTPSampler.auto_redirects']" , 	"type" : "boolean"},
+				"useKeepalive"			: { "path" : "boolProp[@name='HTTPSampler.use_keepalive']" , 	"type" : "boolean"},
+				"doMultipartPost"		: { "path" : "boolProp[@name='HTTPSampler.DO_MULTIPART_POST']" ,	"type" : "boolean"},
+
+				"fileName"				: { "path" : "stringProp[@name='HTTPSampler.FILE_NAME']" },
+				"fileField"				: { "path" : "stringProp[@name='HTTPSampler.FILE_FIELD']" },
+				"mimetype"				: { "path" : "stringProp[@name='HTTPSampler.mimetype']" },
+
+				"monitor"				: { "path" : "stringProp[@name='HTTPSampler.monitor']" ,			"type" : "boolean"},
+
+				"embedded_url_re"		: { "path" : "stringProp[@name='HTTPSampler.embedded_url_re']" }
+			}
+		}
+	},
+	"ResultCollector"	: {
+		"edit" : {
+			"attrs": {
+				"name" 					: { "path" : "@testname" },
+				"elementType" 			: { "path" : "name()"  }
+			},
+			"view": "GENERIC"
+		}
+	},
+	"elementProp"		: { "edit" : { "view": false, "processChildren": true } },
+	"objectProp"		: { "edit" : { "view": false, "processChildren": true } },
+	"collectionProp"	: { "edit" : { "view": false, "processChildren": true } },
+	"boolProp"			: {
+		"edit" : {
+			"attrs": {
+				"name" 	: { "path" : "@name" },
+				"value" : { "path" : "." }
+			},
+			
+			"view": "<div> <form> <span class=\"label\"><%=name%></span><input type=\"checkbox\" name=\"<%=name%>\" value=\"<%=value%>\" <%=(value==\"true\" ? \"checked\" : \"\")%> ></input> </form> </div>" ,
+			"type" : "boolean"
+		}
+	},
+	"stringProp"		: {
+		"edit" : {
+			"attrs": {
+				"name" 	: { "path" : "@name" },
+				"value" : { "path" : "." }
+			},
+			"view": "<div> <form> <span class=\"label\"> <%=name%> </span><input type=\"textbox\" name=\"<%=name%>\" value=\"<%=value%>\"></input> <form> </div>"  
+		}
+	},
+	"longProp"			: { 
+		"edit" : {
+			"attrs": {
+				"name" 	: { "path" : "@name" },
+				"value" : { "path" : "." }
+		    },
+		    "view": "<div> <form> <span class=\"label\"> <%=name%> </span><input type=\"textbox\" name=\"<%=name%>\" value=\"<%=value%>\"></input> </form> </div>" ,
+		    "type" : "number"
+		}
+	},
+	"DEFAULT" : {
+		"edit" : {
+			"attrs": {
+				"name"	: { "path" : "name()" },
+				"value"	: { "get"  : "nodeAsXML", "type": "xml", "path" : "." }
+			}
+		}
+	}
+}
+
