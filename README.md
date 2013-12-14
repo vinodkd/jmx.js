@@ -23,7 +23,7 @@ Status
 
 See `journal.md` for the latest development status. Below is a list of high level milestones reached.
 
-* **Dec-13-2013 :** Relatively stable editor for JMX files with ability to edit elements that are not yet mapped in their raw form.
+* **Dec-13-2013 :** "All basic features available" Release: Relatively stable editor for JMX files with ability to edit elements that are not yet mapped in their raw form.
 * **Oct-26-2013 :** Basic load-edit-save cycle working for one sample jmx file.
 
 User Guide: Setup
@@ -50,6 +50,7 @@ User Guide: Setup
 		<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>
 
 	c. Calls `jmx.loadAndEdit()` and/or `jmx.save()` to load up a JMX file and save it respectively.
+3. Change your web server's configuration to pass appropriate MIME types for `*.jmx` and `res/*.tmpl`. These should be xml and text respectively. For the demo code, I've changed the jmx files to end in .xml s Github's web server serves them up correctly. you could leave your extensions as they were if you can coax your webserver to recognize them as xml and send the appropriate MIME type in its response.
 3. The jmx files can reside anywhere accessible via a URL. Saving updated files requires the web server to be able to handle `PUT`s, however.
 
 User Guide: Running
