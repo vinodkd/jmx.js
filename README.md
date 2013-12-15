@@ -33,6 +33,8 @@ Demo
 
 A running demo of jmx.js is at [the project's Github website](http://vinodkd.github.io/jmx.js/).
 
+Note: jmx.js will not work with Internet Explorer in general. I have IE 9 and tried quite hard for a while to get it to work, but couldnt. It may work with higher versions. Chrome and Firefox should be fine - I develop mostly with Chrome on Windows, but test on Firefox as well. 
+
 How to Setup
 ------------
 
@@ -65,7 +67,7 @@ Using jmx.js to edit and save JMX files
 ---------------------------------------
 
 1. Setup jmx.js as above.
-2. Point your browser to the url of the html page that has the code in step 2 above. Depending on how its setup, one or more JMX files should now be editable. If you're using the demo, for example, point it to `http://localhost:8888/index.html`. You should now be able to see a dropdown of jmx files, with simpleplan.jmx loaded.
+2. Point your browser(Chrome or Firefox currently) to the url of the html page that has the code in step 2 above. Depending on how its setup, one or more JMX files should now be editable. If you're using the demo, for example, point it to `http://localhost:8888/index.html`. You should now be able to see a dropdown of jmx files, with simpleplan.jmx loaded.
 3. With the JMX editor that is displayed you can:
 	* Use the `>` and `^` controls to expand or collapse the content.
 	* Use the `...` control to expand attributes of a node
@@ -109,5 +111,13 @@ As might be obvious, jmx.js could do with some more work before it's truly finis
 * If you're a **Designer**, you could help make jmx.js look better by changing the CSS alone. I've created the basic CSS and div structure framework but have not yet got it to look as pretty as I want it to in my head. The current look is very similar to how it it is in the Swing client and I think we can do way better than that.
 * If you're a **UI/UX Developer**, you could help change not just the CSS, but also some of the interaction controls and how they work. Most of this is isolated to a few functions (if not actually modular), so help tweaking that would be great. For example, Autosave (which the Swing UI has already) would be a nice feature to add; and should be easy considering save is already implemented.
 * If you are a **user of JMeter and and UI/UX Developer**, you could contribute templates for JMX elements that are not yet mapped. This is very similar to writing a JSP, erb or similar template file. It uses a syntax that's similar to JSP, however, because I chose to use Jon Resig's simple templating library.
+* If you're a **really brave UI Developer**, maybe you could help fix jmx.js so that it will work on IE as well? Pretty please? Ideally, I'd like to use a shim like Modernizr to achieve this because I'd rather not change the whole core.
 * If you are a **Developer**, the [Developer's Guide](docs/devguide.md) should help you change `jmx.js` however you want. I've tried to separate out the core logic from the obvious points of customization to some extent to enable easy embedding into your tool of choice. Specific issues that need addressing as well as a wish list of features are in my [primitive issue tracker](docs/issues.md).
 
+Credits
+-------
+
+* [Apache JMeter](http://jmeter.apache.org) for the best open-source Performance Testing tool
+	* ...and for the use of the icons for each element :).
+* Jon Resig for the [Simple template library](http://ejohn.org/blog/javascript-micro-templating/).
+* StackOverflow for being the fount of ready to use questions and answers to all possible problems in development.
