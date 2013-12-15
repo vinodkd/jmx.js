@@ -21,9 +21,9 @@ Requirements/Goals
 Status
 ------
 
-See `journal.md` for the latest development status. Below is a list of high level milestones reached.
+See the [development journal](docs/journal.md) for the latest development status. Below is a list of high level milestones reached.
 
-* **Dec-13-2013 :** "All basic features available" Release: Relatively stable editor for JMX files with ability to edit elements that are not yet mapped in their raw form.
+* **Dec-13-2013 : v 1.0 : ** "All basic features available" Release: Relatively stable editor for JMX files with ability to edit elements that are not yet mapped in their raw form.
 * **Oct-26-2013 :** Basic load-edit-save cycle working for one sample jmx file.
 
 User Guide: Setup
@@ -97,10 +97,10 @@ Note: The simplest indicator that an element is not yet mapped is that its view 
 Contributing
 ------------
 
-As might be obvious, jmx.js is still a work in progress. Detailed information on how the code is setup is available in the [Developer's Guide](devguide.md),  but I've tried to seperate out the customization points such that:
+As might be obvious, jmx.js is still a work in progress. Detailed information on how the code is setup is available in the [Developer's Guide](docs/devguide.md),  but I've tried to seperate out the customization points such that:
 
 * If you're a **Designer**, you could help make jmx.js look better by changing the CSS alone. I've created the basic CSS and div structure framework but have not yet got it to look as pretty as I want it to in my head. The current look is very similar to how it it is in the Swing client and I think we can do way better than that.
 * If you're a **UI/UX Developer**, you could help change not just the CSS, but also some of the interaction controls and how they work. Most of this is isolated to a few functions (if not actually modular), so help tweaking that would be great. For example, Autosave (which the Swing UI has already) would be a nice feature to add; and should be easy considering save is already implemented.
 * If you are a **user of JMeter and and UI/UX Developer**, you could contribute templates for JMX elements that are not yet mapped. This is very similar to writing a JSP, erb or similar template file. It uses a syntax that's similar to JSP, however, because I chose to use Jon Resig's simple templating library.
-* If you are a **Developer**, the Developers Guide should help you change `jmx.js` however you want. I've tried to separate out the core logic from the obvious points of customization to some extent to enable easy embedding into your tool of choice. Specific issues that need addressing as well as a wish list of features are in my [primitive issue tracker](issues.md).
+* If you are a **Developer**, the [Developer's Guide](docs/devguide.md) should help you change `jmx.js` however you want. I've tried to separate out the core logic from the obvious points of customization to some extent to enable easy embedding into your tool of choice. Specific issues that need addressing as well as a wish list of features are in my [primitive issue tracker](docs/issues.md).
 
