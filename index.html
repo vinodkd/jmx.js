@@ -12,12 +12,12 @@
 
 	function load () {
 		JMX.init();
-		jmxDoc = JMX.loadAndEdit("editor", "test/simpleplan.jmx.xml");
+		jmxDoc = JMX.loadAndEdit("editor", "sample/simpleplan.jmx.xml");
 	}
 
 	function loadSelection (sel) {
 		var fileName = sel.options[sel.selectedIndex].value;
-		jmxDoc = JMX.loadAndEdit("editor", "test/" + fileName);
+		jmxDoc = JMX.loadAndEdit("editor", "sample/" + fileName);
 	}
 
 	function save () {

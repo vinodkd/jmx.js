@@ -10,6 +10,7 @@ Outline
 	- Rules for the templates
 	- Generic & Default templates
 	- hashTree craziness
+- Dev Setup
 - Extension points
 	- Overall Look and Feel
 	- View Data
@@ -20,7 +21,9 @@ Outline
 - How to read the code
 	- Code organization
 	- Nested function style
-- Dev Setup
+- End Goal
+	- API exposed
+	- Feature set
 - How to contribute
 
 Design/Curent Implementation

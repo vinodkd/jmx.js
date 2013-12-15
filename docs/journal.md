@@ -463,4 +463,5 @@ Had to change index.html to use include this new js file.
 * DONE Setup a demo on gh-pages
 * improve index.html with some explanatory text.
 
+**Dec-15-2013 02:30 :** Feel the need to reorg the directories a bit. Moved .sh files to a new tools dir. Planning to move all docs to a docs dir and renaming test to sample. This last will require code change. Might as well move all template files to their own dir.
 
