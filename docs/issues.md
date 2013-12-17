@@ -7,4 +7,5 @@ issues
 | 2 | feature request | Autosave files as they're edited | Not started | |
 | 3 | feature request | when loading the jmx file, if responsexml is null, try to read responseText and parse it as xml | Not started | |
 | 4 | task | change the code in jmx.js from a nested function style to a flat style to avoid a performance hit | Not started | |
+| 5 | task | Add exception handling and improve error handling in general | Not started | |
 
