@@ -474,3 +474,18 @@ Had to change index.html to use include this new js file.
 **Dec-17-2013 18:24 :** Filling out details on templates.
 
 **Dec-18-2013 05:40 :** Nominally finished writing devguide. Uploading to gh to proof now.
+
+**Dec-18-2013 06:59 :** Updated worklist:
+* DONE make a clear map from jmx field -> xml dom -> view control -> xml dom -> saved jmx file.
+* DONE put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
+	* NOT REQUIRED implement xpath-ish.js for this.
+* DONE implement the "edit raw" view for all elements that use the GENERIC template
+* DONE change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
+* DONE move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
+* WONTFIX Check if jmx.js:313 needs to be fixed.
+* DONE Update readme with instructions on how to setup and embed into app
+* DONE Add design doc explaining the solution - use notes from journal for it.
+	* DONE Add note that controls must be 3 levels down from jmxelement.
+* remove hardcoding of save to test.jmx and make it optional for demo purposes (maybe add a demo config)
+* DONE Setup a demo on gh-pages
+* improve index.html with some explanatory text.
