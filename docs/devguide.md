@@ -1,37 +1,9 @@
-Outline
--------
-
-- Why this project
-- Dev Setup
-- How to read the code
-	- Code organization
-	- Nested function style
-- How it works
-	- parsing in the browser
-	- the mapping
-	- eventing
-	- save
-	- Rules for the templates
-	- Generic & Default templates
-	- hashTree craziness
-- Extension points
-	- Overall Look and Feel
-	- View Data
-	- View functions
-	- View templates
-	- Editors/Pickers
-	- Templating Engine
-- End Goal
-	- API exposed
-	- Feature set
-- How to contribute
-
 Why this project
 ----------------
 
-I have been a long-time user of JMeter and have always thought about a Web-based UI for JMeter. The original reasons were the sluggishness of the Swing Client in the early days - which were fixed later on - but recently I started thinking in terms of a use case in the clustered preformance test scenario: where you might need to edit a JMX file before firing it off on a cluster of machines in JMeter Master-slave mode.
+I have been a long-time user of JMeter and have always thought about a Web-based UI for JMeter. The original reason was the slowness of the Swing Client in the early days - which were fixed later on - but recently I started thinking in terms of the clustered preformance test scenario: where you might need to edit a JMX file before firing it off on a cluster of machines in JMeter Master-slave mode.
 
-I've explicitly stopped short of making this a full-fledged client like the Swing one because that is a larger enterprise and might not make complete sense for a Web-based use. I do, however, think it might be useful to merge such an editor with visualizations of the test results using the current js visualization engines like d3.
+I've explicitly stopped short of making this a full-fledged client like the Swing one because that IMO is a larger enterprise. Instead, this project aims to build a JMX Editor that can be easily embeddded into another product - like a JMeter IDE. I do, however, think it might be useful to merge such an editor with visualizations of the test results using the current js visualization engines like d3.
 
 Dev Setup
 ---------
@@ -46,7 +18,7 @@ Just clone the repo.
 
 ### Building and running the code
 
-As mentioned in the README, you should fire the browser and point to index.html. If, however, you have changed `src/jsonelements.json`, you'll have to run `tools/stripcomments.sh` before the changes take effect. `tools/webserver.sh` typically handles this for you if you're using the demo server.
+As mentioned in the README, you should fire the browser and point to the html file housing `jmx.js` - which is index.html on the demo. If, however, you have changed `src/jsonelements.json`, you'll have to run `tools/stripcomments.sh` before the changes take effect. `tools/webserver.sh` typically handles this for you if you're using the demo.
 
 Code Overview
 -------------
@@ -65,10 +37,10 @@ The codebase is arranged thus:
 	* `res/*.png,*.gif`: images used as icons for the JMX elements.
 * `sample/`: Contains sample jmx files
 * `tools`: Contains simple bash tools used for ease of devlopment. All of these tools must be run from within `tools/`
-	* `webserver.sh` / `webserver.js`: a simple nodejs based web server that can do basic get,put and post required to test jmx.js. Can be replaced with a standard web server; PUT and POST support is expected, however.
+	* `webserver.sh` + `webserver.js`: a simple nodejs based web server that can do basic get,put and post required to test jmx.js. Can be replaced with a standard web server; PUT and POST support is expected, however.
 	* `stripcomments.sh`: strips comments from `lib/jmxelements.json` and copies it to `lib/`
 	* `pushtoghpages.sh`: copies changes to the `gh-pages` branch.
-`index.html` : Demo app that embeds jmx.js.
+* `index.html` : Demo app that embeds jmx.js.
 
 ### A note on the style of JS Code organization
 
@@ -108,34 +80,34 @@ With that overview, let's see how each step works.
 This is the meat of the code starting at `loadAndEdit()`. To display an editable version of a JMX file, we need to:
 
 - Get the file contents using XHR - `loadFile()`.
-- Parse the xml to create an xml DOM - `xmlhttp.responseXML`.
-- Traverse the DOM and create views. This requires us to:
-	- **Map the JMX file to a memory object, ie an xml dom called the Model**. `displayNode()` and `processChildren()` do this by recursively descending down the jmx file _in document order_. The `<hashTree>` jmx element throws a sufficiently large wrench in the works that it has to be handled specially. Details are below in a separate section.
-	- **Map an HTML dom that represents the view of the data in the xml dom - the View**. This requires extracting out data from the xml dom and then displaying it appropriately. `getAttrValues()` does the first step with help from a per-element configuration stored in `jmxelements.json`. The display is handled by templates stored in `tmpl`. Both the json file and the templates have some rules which are expanded in their own section below.
+- Parse the xml to create an xml DOM aka **the Model** - `xmlhttp.responseXML`.
+- Create the editable view of the file. This requires us to:
+	- **Traverse the DOM and map it to an HTML DOM - the View**. `displayNode()` and `processChildren()` do this by recursively descending down the jmx file _in document order_. The `<hashTree>` jmx element throws a sufficiently large wrench in the works that it has to be handled specially. Details are below in a separate section.
+	- **Map specific bits of data to the HTML dom**. This requires extracting out data from the xml dom and displaying it appropriately. `getAttrValues()` does the first step with help from a per-element configuration stored in `jmxelements.json`. The display is handled by templates stored in `/tmpl`. Both the json file and the templates have some rules which are expanded in their own section below.
 	- **Map appropriate parts of the HTML dom as editable controls (pre-filled with values from the jmx file)**. `generateView()` calls the templating engine to achieve this and positions it within the larger view.
 	- **Add event handlers to save modified controls' values**. `addInteractions()` does this work and depends on the editing code presented below to actually save values.
-	- **Store a reference to the node on view tree so that edit controls can report back changes to the model**. the aptly-named `addRefToModel()` does this. Special handling is required because JMX files do not have unique ids for their element instances. The `testclass` attribute tells us the "class" of the element (in OO terms), but all elements of the same class (the "instances" in OO terms) can be differentiated from each other only by their contents. I therefore create an artificial "view id" that starts at 0 on the top and increments in document order. It is made available in the HTML DOM for use, but currently is not actively used after the render is done.
+	- **Store a reference to the node on view tree so that edit controls can report back changes to the model**. the aptly-named `addRefToModel()` does this. Special handling is required because JMX files do not have unique ids for their element instances. The `testclass` attribute tells us the "class" of the element (in OO terms), but all elements of the same class (the "instances" in OO terms) can be differentiated from each other only by their contents. I therefore create an artificial "view id" that starts at 0 on the top and increments in document order. It is made available in the HTML DOM for use, but currently is not actively used after the render is done. It **is**, however, reset everytime `loadAndEdit()` is called to allow for multiple files to be loaded without the count of jmx elements overflowing the int limit. This does mean that you cannot have two jmx editors on the same page.
 
 #### Configuring jmxelements
 
 `jmxelements.json` contains all the configuration needed to view, edit and (in future) create jmx elements. Here's an overview to how the file is organized:
 
-* The file is a map of jmx element names as keys and configurations to extract view data, map view templates and (in future) child elements that can be created under this element. 
-* The key is the value that of the `testClass` attribute in the source jmx file.
+* The file is a map of jmx element names to their configurations. 
+* The key is name of the element (= `testClass` attribute from the source jmx file).
 * The value is an object that has the following children:
-	* edit: which holds configurations to enable editing the element ie, to display from the source jmx file as well as to write to it.It has the following children:
-		* attrs: A map of the element's "attributes". These attributes could be true xml attributes or even values from child nodes in the jmx source; the key point is that they are treated as attributes of the jmx element for editing purposes and therefore are view data. 3 pieces of information are required about them:
-			* path: an xpath into the xml dom for where to get the value from and/or is written to.
+	* **edit**: which holds configurations to enable editing the element ie, to display from the source jmx file as well as to write to it.It has the following children:
+		* **attrs**: A map of the element's "attributes". These attributes could be true xml attributes or even values from child nodes in the jmx source; the key point is that they are treated as attributes of the jmx element for editing purposes and therefore are view data. 3 pieces of information are required about them:
+			* **path**: an xpath into the xml dom for where to get the value from and/or is written to.
 				* by convention, `elementType` holds the name of the jmx element and `name` holds the xsl `name()` value. hashTree is the only element currently that doesnt supply name.
-			* type: an optional datatype to map the value into. This is used to determine the editor to use for the display and the update handler to use for saving. "string" is the default.
-			* get: an alternative to "path", this is used to provide a view function - a function that returns the value that a particular named attribute must be displayed as having. This is used currently to return parent-child pairs in the hashTree template. However, it can also be used with the path value. When both 'get' and 'path' are present - the former maps source-to-display, while the latter maps display-to-updated-source. An example is the GENERIC template.
-	* view: Refers to the template used to display it a JMX Element. Allowed values are:
+			* **type**: an optional datatype to map the value into. This is used to determine the editor to use for the display and the update handler to use for saving. "string" is the default.
+			* **get**: an alternative to "path", this is used to provide a view function - a function that returns the value that a particular named attribute must be displayed as having. This is used currently to return parent-child pairs in the hashTree template. However, it can also be used with the path value. When both 'get' and 'path' are present - the former maps source-to-display, while the latter maps display-to-updated-source. An example is the GENERIC template.
+	* **view**: Refers to the template used to display it a JMX Element. Allowed values are:
 		* not present at all: The code will look for a template file with the same name as the node in the `tmpl` dir
 		* "GENERIC" or "DEFAULT": The code will load template files that match those names.
 		* string: The code will treat it as an inline template and apply the values got from attrs into the template
 		* false: This denotes that a particular element does not have a display at all. We do this currently for JMeterTestPlan.
-	* processChildren: This setting controls whether child elements should be used at all. if `true`, children are processed recursively. This value is overridden, however, if the template has a div for children - see `shouldProcessChildren()` for this. The two-stage process allows optimizing the recursive descent if required but overriding it declaratively from the template.
-	* create: This setting holds configurations to enable creating a new element of this class. It is not currently used, but will be in future.
+	* **processChildren**: This setting controls whether child elements should be used at all. if `true`, children are processed recursively. This value is overridden, however, if the template has a div for children - see `shouldProcessChildren()`. The two-stage process allows optimizing the recursive descent if required but overriding it declaratively from the template.
+	* **create**: This setting holds configurations to enable creating a new element of this class. It is not currently used, but will be in future.
 
 #### Template Design
 
@@ -143,8 +115,8 @@ This is the meat of the code starting at `loadAndEdit()`. To display an editable
 
 As mentioned above, templates are named according to the `testClass` attribute of elements. However, there are 2 special cases:
 
-* "Default" templates: To avoid specifying _every single element_ before an editor can be stood up, jmx.js supplies two default templates: one is used to display a JMX Element (called `GENERIC`) and the other is used to display child xml elements of such elements (called `1DEFAULT`). "DEFAULT_ELEMENT" and "DEFAULT_NODE" might have been appropriate names, but it bled the implementation detail into the config. It made sense to keep the config file in the language of describing the jmx elements and their views. From that sense, `GENERIC` is a generic, catch-all template for all elements that the configurer doesnt care yet to prescribe a template, while default is the "system-default" template for any child node that the configurer doesnt care yet.
-* "Inline" Templates: It seemed too much to have a separate file if the template fit into one line, so the config allows for inline templates. Note, however, that inline templates MUST be written such that all embedded quotes must be escaped double quotes.
+* "Default" templates: To avoid specifying _every single element_ before an editor can be stood up, jmx.js supplies two default templates: one is used to display a JMX Element (called `GENERIC`) and the other is used to display child xml elements of such elements (called `DEFAULT`). "DEFAULT_ELEMENT" and "DEFAULT_NODE" might have been appropriate names, but it bled the implementation detail into the config; while it seemed better to keep the config file in the language of describing the jmx elements and their views. From that sense, `GENERIC` is a generic, catch-all template for all elements that the configurer doesnt care yet to prescribe a template, while default is the "system-default" template for any child node that the configurer doesnt care yet.
+* "Inline" Templates: It seemed too much to have a separate file if the template fit into one line, so the config allows for inline templates. Note, however, that inline templates MUST have all embedded quotes be escaped double quotes.
 
 ##### How to write templates
 
@@ -158,11 +130,11 @@ Point #2 is not as onerous as it sounds. I'll point out the few code dependencie
 * The code supplies one data value by default - `vid` - that gives the view a unique id.
 * Each template must be contained in a div with a jmxelement class, like so:
 		
-	<div class="jmxElement <%=elementType%>" >
-		...
-	</div>
+		<div class="jmxElement <%=elementType%>" >
+			...
+		</div>
 
- Note that the elementType attr is used to plugin the testClass's value. This is not explicitly used currently, but might have applications in changing the view later based on this value.
+ Note that the elementType attr is used to plug in the testClass's value as a CSS class. This is not explicitly used in the CSS currently, but might have applications in changing the view later based on this value.
 *  The next level must be a `<form>` with two children - divs with classes 'headline' and 'body' respectively. The form represents the ability to edit values and the headline and body represent the "summary" and "detailed" views of the element. Note that the body is NOT element's children, but the remainder of its "attributes".
 * The headline usually represents one "line" of display and holds enough information to identify the element in a folded view; which typically are:
 	* An icon for the element type (which has to be got from [the apache site](http://svn.apache.org/repos/asf/jmeter/trunk/src/core/org/apache/jmeter/images/)). This must be stored in `/res` and referenced relative to that directory.
@@ -178,6 +150,7 @@ Point #2 is not as onerous as it sounds. I'll point out the few code dependencie
 	* The body can also have a `<div class="toggle toggleChildren"> ^ </div>` which will be used to hide or show the body itself. This is also expected to be used only from `hashTree`, but there might be future use elsewhere - especially if you want another form for the children. The current style is to have this div be the first element so that it shows up leftmost.
 	* Typically one form is sufficient per element, but when children are embedded within the element's view, any inner forms are removed by the browser. So it might be useful to place children outside the form. You can see this in the `GENERIC` template, which by definition cannot assume that its children will not have forms of their own.
 * As mentioned above, inline templates must be written with all embedded quotes being escapted double quotes (no single quotes allowed).
+* Note also that the distance from any control to thd div with jmxelement must be 3 levels, ie `div/form/div/input` is the hierarchy the code expects. If your template doesnt need this level, create a dummy div.
 * The toggles are the single UI element that I'd like to refactor out of the templates so they're handled "in the framework".
 
 ##### Changing the templating engine
@@ -194,7 +167,7 @@ The second half of the jmx.js is logic to handle editing of the loaded JMX file.
 
 * Type-specific event handlers - the `xxxChanged()` functions. These are pretty straightforward: they convert the control's value into something that can be used to update the model with.
 * Generic Model update function: this is the `updateModel()` function.
-* The editor framework: Represented by the `EDITORS` global array, this allows for a flexible addition of types. The framework allows for a context-sensitive editor to be loaded when the user chooses a particular control, although no such handler is currently implemented. Date pickers and File Choosers are the typical use case for this capability.
+* The editor framework: Represented by the `EDITORS` global array, this allows for a flexible addition of types. The currently supported types are "string", "boolean", "number", "time" and "xml"; and takes two event handlers for each type: `onfocus` and `onchange`. The former allows for a context-sensitive editor to be loaded when the user chooses a particular control, although no such handler is currently implemented. Date pickers and File Choosers are the typical use case for this capability. The latter is implemented and calls the generic updater.
 
 ### Saving a JMX File
 
