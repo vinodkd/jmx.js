@@ -81,8 +81,8 @@
 				"path"					: { "path" : "stringProp[@name='HTTPSampler.path']" },
 
 				"followRedirects"		: { "path" : "boolProp[@name='HTTPSampler.follow_redirects']" , 	"type" : "boolean"},
-				"autoRedirects"			: { "path" : "boolProp[@name='HTTPSampler.auto_redirects']" , 	"type" : "boolean"},
-				"useKeepalive"			: { "path" : "boolProp[@name='HTTPSampler.use_keepalive']" , 	"type" : "boolean"},
+				"autoRedirects"			: { "path" : "boolProp[@name='HTTPSampler.auto_redirects']" , 		"type" : "boolean"},
+				"useKeepalive"			: { "path" : "boolProp[@name='HTTPSampler.use_keepalive']" , 		"type" : "boolean"},
 				"doMultipartPost"		: { "path" : "boolProp[@name='HTTPSampler.DO_MULTIPART_POST']" ,	"type" : "boolean"},
 
 				"fileName"				: { "path" : "stringProp[@name='HTTPSampler.FILE_NAME']" },
