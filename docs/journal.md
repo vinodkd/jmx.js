@@ -469,3 +469,8 @@ Had to change index.html to use include this new js file.
 
 **Dec-16-2013 22:00 :** Left with details on templates, jmxelements.json etc.
 
+**Dec-16-2013 23:18 :**  Still working on jmxelements. struggling to explain view options
+
+**Dec-17-2013 18:24 :** Filling out details on templates.
+
+**Dec-18-2013 05:40 :** Nominally finished writing devguide. Uploading to gh to proof now.

@@ -46,7 +46,7 @@ Just clone the repo.
 
 ### Building and running the code
 
-As mentioned in the README, you should fire the browser and point to index.html. If, however, you have changed `src/jsonelements.json`, you'll have to run `tools/stipcomments.sh` before the changes take effect. `tools/webserver.sh` typically handles this for you if you're using the demo server.
+As mentioned in the README, you should fire the browser and point to index.html. If, however, you have changed `src/jsonelements.json`, you'll have to run `tools/stripcomments.sh` before the changes take effect. `tools/webserver.sh` typically handles this for you if you're using the demo server.
 
 Code Overview
 -------------
@@ -123,19 +123,70 @@ This is the meat of the code starting at `loadAndEdit()`. To display an editable
 * The file is a map of jmx element names as keys and configurations to extract view data, map view templates and (in future) child elements that can be created under this element. 
 * The key is the value that of the `testClass` attribute in the source jmx file.
 * The value is an object that has the following children:
-	* edit: which holds configurations to enable editing the element
-	* view: which refers to the template used to display it
-	* create: which holds configurations to enable creating a new element of this class.
+	* edit: which holds configurations to enable editing the element ie, to display from the source jmx file as well as to write to it.It has the following children:
+		* attrs: A map of the element's "attributes". These attributes could be true xml attributes or even values from child nodes in the jmx source; the key point is that they are treated as attributes of the jmx element for editing purposes and therefore are view data. 3 pieces of information are required about them:
+			* path: an xpath into the xml dom for where to get the value from and/or is written to.
+				* by convention, `elementType` holds the name of the jmx element and `name` holds the xsl `name()` value. hashTree is the only element currently that doesnt supply name.
+			* type: an optional datatype to map the value into. This is used to determine the editor to use for the display and the update handler to use for saving. "string" is the default.
+			* get: an alternative to "path", this is used to provide a view function - a function that returns the value that a particular named attribute must be displayed as having. This is used currently to return parent-child pairs in the hashTree template. However, it can also be used with the path value. When both 'get' and 'path' are present - the former maps source-to-display, while the latter maps display-to-updated-source. An example is the GENERIC template.
+	* view: Refers to the template used to display it a JMX Element. Allowed values are:
+		* not present at all: The code will look for a template file with the same name as the node in the `tmpl` dir
+		* "GENERIC" or "DEFAULT": The code will load template files that match those names.
+		* string: The code will treat it as an inline template and apply the values got from attrs into the template
+		* false: This denotes that a particular element does not have a display at all. We do this currently for JMeterTestPlan.
+	* processChildren: This setting controls whether child elements should be used at all. if `true`, children are processed recursively. This value is overridden, however, if the template has a div for children - see `shouldProcessChildren()` for this. The two-stage process allows optimizing the recursive descent if required but overriding it declaratively from the template.
+	* create: This setting holds configurations to enable creating a new element of this class. It is not currently used, but will be in future.
 
 #### Template Design
 
 ##### Template naming and representation in config
-##### Rules for templates
+
+As mentioned above, templates are named according to the `testClass` attribute of elements. However, there are 2 special cases:
+
+* "Default" templates: To avoid specifying _every single element_ before an editor can be stood up, jmx.js supplies two default templates: one is used to display a JMX Element (called `GENERIC`) and the other is used to display child xml elements of such elements (called `1DEFAULT`). "DEFAULT_ELEMENT" and "DEFAULT_NODE" might have been appropriate names, but it bled the implementation detail into the config. It made sense to keep the config file in the language of describing the jmx elements and their views. From that sense, `GENERIC` is a generic, catch-all template for all elements that the configurer doesnt care yet to prescribe a template, while default is the "system-default" template for any child node that the configurer doesnt care yet.
+* "Inline" Templates: It seemed too much to have a separate file if the template fit into one line, so the config allows for inline templates. Note, however, that inline templates MUST be written such that all embedded quotes must be escaped double quotes.
+
+##### How to write templates
+
+`jmx.js` templates must be written along some guidlines for two reasons:
+
+1. Consistent overall look of rendered UI with standard controls for expanding and collapsing elements; and editing and saving values.
+2. The CSS and JS code makes some (not complete) assumptions about the DOM structure in the templates. Deviations may lead to messed up layouts and/or errors.
+
+Point #2 is not as onerous as it sounds. I'll point out the few code dependencies as we go along.
+
+* The code supplies one data value by default - `vid` - that gives the view a unique id.
+* Each template must be contained in a div with a jmxelement class, like so:
+		
+	<div class="jmxElement <%=elementType%>" >
+		...
+	</div>
+
+ Note that the elementType attr is used to plugin the testClass's value. This is not explicitly used currently, but might have applications in changing the view later based on this value.
+*  The next level must be a `<form>` with two children - divs with classes 'headline' and 'body' respectively. The form represents the ability to edit values and the headline and body represent the "summary" and "detailed" views of the element. Note that the body is NOT element's children, but the remainder of its "attributes".
+* The headline usually represents one "line" of display and holds enough information to identify the element in a folded view; which typically are:
+	* An icon for the element type (which has to be got from [the apache site](http://svn.apache.org/repos/asf/jmeter/trunk/src/core/org/apache/jmeter/images/)). This must be stored in `/res` and referenced relative to that directory.
+	* The type of the element
+	* An editor for its name
+	* An Ellipses control to expand its body. The div holding the ellipses must have the `toggle toggleAttrs` set of classes.
+* The body is where majority of the element's editable values should reside, and can be layout quite freely. Use general HTML layouting practices - divs for block elements, spans for flow ones and so forth. Caveats, however:
+	* The body  should have the `body` class to identify it as such. It may have an additional `expanded` or `collapsed` class added, which sets its state of being expanded or collapsed _at load time_.
+	* The existing templates use css classes like `strProp` and `label`. These are anticipatory and don't yet have a special visual treatment.
+	* With the default templating engine, view data can be referenced using `<%=var%>` syntax and full javascript can be written using `<% ... js code here... %>` styles.
+	* If the config has `processChildren = true`, the code will append a div to the body to hold the child elements. however, you can also control where the children should appear relative to the element's view by adding a `<div class="<%=elementType%>_children"></div>`.
+	* Similarly, if a template adds a `<div class="nodecontents"></div>` before calling `displayNode()` on a child, the generated view will replace only that div, allowing finer control of positioning the child's view within the parent. This was built to support `hashTree`, but is available for use by other elements as well.
+	* The body can also have a `<div class="toggle toggleChildren"> ^ </div>` which will be used to hide or show the body itself. This is also expected to be used only from `hashTree`, but there might be future use elsewhere - especially if you want another form for the children. The current style is to have this div be the first element so that it shows up leftmost.
+	* Typically one form is sufficient per element, but when children are embedded within the element's view, any inner forms are removed by the browser. So it might be useful to place children outside the form. You can see this in the `GENERIC` template, which by definition cannot assume that its children will not have forms of their own.
+* As mentioned above, inline templates must be written with all embedded quotes being escapted double quotes (no single quotes allowed).
+* The toggles are the single UI element that I'd like to refactor out of the templates so they're handled "in the framework".
+
 ##### Changing the templating engine
+
+I used Jon Resig's simple templating engine for convenience - it was the smallest, no dependency engine I could find given my "no external deps" goal. The code is relatively insulated from the templating engine in that it calls a global `tmpl()` function. So in theory you could replace it with your templating engine of choice. All templates (including the inline ones in `jmxlement.json`) will have to be moved over to the new format, however. Also, you will have to keep the DOM and CSS norms detailed above for the code to work.
 
 #### The trouble with hashTree and processing in document order
 
-The JMeter website states that [there will not be an XSD for the forceeable future](http://wiki.apache.org/jmeter/JMeterFAQ#Is_there_a_JMX_Schema.2FDTD_available.3F) and I think `<hashTree>` is the reason. It seems that the JMX file format is a serialization of an object hierarchy where `hashTree` is a HashMap. The serialization, however, dumps names and values as siblings under a single parent instead of having proper `<key>` and `<value>` elements, for example. I had to enhance the logic and config (`viewfunctions.js:getPCPairs()`) to handle this special case of traversal NOT in document order. It turned out to be a good thing, however, because we now have the ability to do arbitrary view data functions.
+The JMeter website states that [there will not be an XSD for the forceeable future](http://wiki.apache.org/jmeter/JMeterFAQ#Is_there_a_JMX_Schema.2FDTD_available.3F) and I think `<hashTree>` is the reason. It seems that the JMX file format is a serialization of an object hierarchy where `hashTree` is a HashMap with the parents as keys and children as values. The serialization, however, dumps keys (ie, parents) and values (ie children) as siblings under a single parent instead of having proper `<key>` and `<value>` elements, for example. I had to enhance the logic and config (`viewfunctions.js:getPCPairs()`) to handle this special case of traversal NOT in document order. It turned out to be a good thing, however, because we now have the ability to do arbitrary view data functions.
 
 ### Editing a JMX File
 
