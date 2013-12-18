@@ -11,7 +11,7 @@
 	var jmxDoc;
 
 	function load () {
-		JMX.init();
+		JMX.init({"demo" : true});
 		jmxDoc = JMX.loadAndEdit("editor", "sample/simpleplan.jmx.xml");
 	}
 
@@ -21,7 +21,11 @@
 	}
 
 	function save () {
-		JMX.save("http://localhost:8888/test.jmx.xml",jmxDoc);
+		try{
+			JMX.save("http://localhost:8888/test.jmx.xml",jmxDoc);	
+		}catch(e){
+			alert("Save didnt work most probably because jmx.js is in Demo mode intended for hosting on Github Pages. If this is your own hosted instance, please change config.json or the input to init().");
+		}
 	}
 	</script>
 	<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>	

@@ -73,7 +73,7 @@ Using jmx.js to edit and save JMX files
 	* Use the `...` control to expand attributes of a node
 	* Use the `Edit Raw...` control to edit the contents of a JMX Element in its raw xml form. This usually is the UI for JMX elements that have not yet been mapped to a UI view.
 	* Use the regular HTML controls - texboxes, checkboxes etc to edit the values of JMX fields. Tab out to save your change.
-4. Use the `save()` functionality to save your edits. On the demo, click the Save button. This most probably will not work on the Github-hosted demo for obvious reasons.
+4. Use the `save()` functionality to save your edits. On the demo, click the Save button. This will not work on the Github-hosted demo for obvious reasons, but can be turned on by setting `"demo": false` in `lib/config.json` or changing it in the call to `init()`.
 
 JMX Element Coverage
 --------------------

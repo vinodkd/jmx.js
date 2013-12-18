@@ -486,6 +486,6 @@ Had to change index.html to use include this new js file.
 * DONE Update readme with instructions on how to setup and embed into app
 * DONE Add design doc explaining the solution - use notes from journal for it.
 	* DONE Add note that controls must be 3 levels down from jmxelement.
-* remove hardcoding of save to test.jmx and make it optional for demo purposes (maybe add a demo config)
+* DONE make it optional for demo purposes (DONE maybe add a demo config)
 * DONE Setup a demo on gh-pages
 * improve index.html with some explanatory text.

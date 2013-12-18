@@ -73,7 +73,10 @@ With that overview, let's see how each step works.
 
 ### Initialization
 
-`init()` loads up the element config and the view templates. Pretty straightforward XHR file loads. `loadTemplates()` has some defaulting logic, however, which is explained below in the section that explains `jmxelements.json`.
+`init()` loads up a global config file, the element config and the view templates; all of which are pretty straightforward XHR file loads. 
+
+* `config.json` is the global config file and it currently holds just one setting: whether the installation is in demo mode or not. If so, save is not allowed. This is to enable running the demo on Github pages. 
+* `loadTemplates()` has some defaulting logic which is explained below in the section that explains `jmxelements.json`.
 
 ### Loading a JMX File
 
@@ -171,5 +174,4 @@ The second half of the jmx.js is logic to handle editing of the loaded JMX file.
 
 ### Saving a JMX File
 
-Save is represented by a single `saveFile()` function and is a standard xhr put call. As mentioned in the readme, this could do with improvement in terms of an autosave capability.
-
+Save is represented by a single `saveFile()` function and is a standard xhr put call. As mentioned in the readme, this could do with improvement in terms of an autosave capability. Wrapping this is the `save()` function that checks if we're in demo mode and allows saves only if we're not.
