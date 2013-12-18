@@ -488,4 +488,4 @@ Had to change index.html to use include this new js file.
 	* DONE Add note that controls must be 3 levels down from jmxelement.
 * DONE make it optional for demo purposes (DONE maybe add a demo config)
 * DONE Setup a demo on gh-pages
-* improve index.html with some explanatory text.
+* DONE improve index.html with some explanatory text.
