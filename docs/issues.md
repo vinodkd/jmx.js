@@ -8,4 +8,5 @@ issues
 | 3 | feature request | when loading the jmx file, if responsexml is null, try to read responseText and parse it as xml | Not started | |
 | 4 | task | change the code in jmx.js from a nested function style to a flat style to avoid a performance hit | Not started | |
 | 5 | task | Add exception handling and improve error handling in general | Not started | |
-
+| 6 | task | Put correct values in ThreaGroup.tmpl | Not started | |
+| 7 | feature request | Move the toggles out of the templates and make the template only denote the location of the toggle, not its look and feel  | Not started | |
