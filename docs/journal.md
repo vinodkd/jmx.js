@@ -448,3 +448,47 @@ Had to change index.html to use include this new js file.
 
 **Dec-14-2013 08:03 :** Still trying to figure out how to get the demo working. gh-pages will not serve up tmpl as text it looks like, and i might have to rename the jmx files to .xml for them to work without a server config like in webserver.js.
 
+**Dec-14-2013 13:30 :** Got basic gh-pages working. Still need to beautify index.html with some explanatory text. In that process, added `pushghpages.sh` as a tool for easy push to the gh-pages branch.
+
+**Dec-14-2013 13:32 :** Updated worklist, therefore:
+* DONE make a clear map from jmx field -> xml dom -> view control -> xml dom -> saved jmx file.
+* DONE put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
+	* NOT REQUIRED implement xpath-ish.js for this.
+* DONE implement the "edit raw" view for all elements that use the GENERIC template
+* DONE change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
+* DONE move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
+* WONTFIX Check if jmx.js:313 needs to be fixed.
+* DONE Update readme with instructions on how to setup and embed into app
+* WIP Add design doc explaining the solution - use notes from journal for it.
+	* Add note that controls must be 3 levels down from jmxelement.
+* remove hardcoding of save to test.jmx and make it optional for demo purposes (maybe add a demo config)
+* DONE Setup a demo on gh-pages
+* improve index.html with some explanatory text.
+
+**Dec-15-2013 02:30 :** Feel the need to reorg the directories a bit. Moved .sh files to a new tools dir. Planning to move all docs to a docs dir and renaming test to sample. This last will require code change. Might as well move all template files to their own dir.
+
+**Dec-15-2013 10:54 :** Still working on explaining the core code.
+
+**Dec-16-2013 22:00 :** Left with details on templates, jmxelements.json etc.
+
+**Dec-16-2013 23:18 :**  Still working on jmxelements. struggling to explain view options
+
+**Dec-17-2013 18:24 :** Filling out details on templates.
+
+**Dec-18-2013 05:40 :** Nominally finished writing devguide. Uploading to gh to proof now.
+
+**Dec-18-2013 06:59 :** Updated worklist:
+* DONE make a clear map from jmx field -> xml dom -> view control -> xml dom -> saved jmx file.
+* DONE put in an unobtrusive event handler framework and attach it to all controls in Threadgroup
+	* NOT REQUIRED implement xpath-ish.js for this.
+* DONE implement the "edit raw" view for all elements that use the GENERIC template
+* DONE change the test app and jmx.js such that any file can be picked and displayed, ie remove hard-coded simpleplan.jmx.
+* DONE move all code into self executing anonymous function so it can be modularized and the api given in readme can be realized.
+* WONTFIX Check if jmx.js:313 needs to be fixed.
+* DONE Update readme with instructions on how to setup and embed into app
+* DONE Add design doc explaining the solution - use notes from journal for it.
+	* DONE Add note that controls must be 3 levels down from jmxelement.
+* DONE make it optional for demo purposes (DONE maybe add a demo config)
+* DONE Setup a demo on gh-pages
+* DONE improve index.html with some explanatory text.
+

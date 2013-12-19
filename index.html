@@ -11,23 +11,47 @@
 	var jmxDoc;
 
 	function load () {
-		JMX.init();
-		jmxDoc = JMX.loadAndEdit("editor", "test/simpleplan.jmx.xml");
+		JMX.init({"demo" : true});
+		jmxDoc = JMX.loadAndEdit("editor", "sample/simpleplan.jmx.xml");
 	}
 
 	function loadSelection (sel) {
 		var fileName = sel.options[sel.selectedIndex].value;
-		jmxDoc = JMX.loadAndEdit("editor", "test/" + fileName);
+		jmxDoc = JMX.loadAndEdit("editor", "sample/" + fileName);
 	}
 
 	function save () {
-		JMX.save("http://localhost:8888/test.jmx.xml",jmxDoc);
+		try{
+			JMX.save("http://localhost:8888/test.jmx.xml",jmxDoc);	
+		}catch(e){
+			alert("Save didnt work most probably because jmx.js is in Demo mode intended for hosting on Github Pages. If this is your own hosted instance, please change config.json or the input to init().");
+		}
 	}
 	</script>
-	<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>	
+	<link rel="stylesheet" type="text/css" href="res/jmx.js.css"></link>
+	<style type="text/css">
+		h1 { font-size: 18px; }
+		#header{ padding-bottom: 20px;}
+		#editor {
+			float: left;
+			width: 50%;
+			padding: 5px;
+		}
+		#help {
+			float: right;
+			text-align: left;
+			width: 37%;
+			padding: 5px;
+		}
+	</style>
 </head>
 <body onload="load()">
+	<div id="header">
+		<h1> jmx.js - A Web-based Editor for JMeter's JMX file format</h1>
+		<div> A project by <a href="http://www.github.com/vinodkd">vinodkd</a> hosted on Github</div>
+	</div>
 	<div>
+		<span>Select a File: </span>
 		<select onchange="loadSelection(this)">
 			<option value="simpleplan.jmx.xml" selected>simpleplan</option>
 			<option value="blank.jmx.xml">blank</option>
@@ -36,5 +60,18 @@
 		<button onclick="save();">Save</button>
 	</div>
 	<div id="editor"></div>
+	<div id="help">
+		<h2>Quick User Guide</h2>
+		<ul>
+			<li> Use the <span class="toggle">&gt;</span> and <span class="toggle">^</span> controls to expand or collapse the content.</li>
+			<li> Use the <span class="toggle">...</span> control to expand attributes of a node.</li>
+			<li> Use the <span class="toggle">Edit Raw...</span> control to edit the contents of a JMX Element in its raw xml form. This usually is the UI for JMX elements that have not yet been mapped to a UI view.</li>
+			<li> Use the regular HTML controls - texboxes, checkboxes etc to edit the values of JMX fields. Tab out after editing.</li>
+			<li> Use the <strong>save()</strong> functionality to save your edits. On the demo, click the Save button. This will not work on the Github-hosted demo for obvious reasons, but can be turned on by setting <strong>"demo": false`</strong> in <strong>lib/config.json</strong> or changing it in the call to <strong>init()</strong></li>
+			<li>See the <a href="https://github.com/vinodkd/jmx.js">README</a> for more details.</li>
+		</ul>
+		<h2>Would you like to help improve jmx.js?</h2>
+		<p> From sprucing up the look and feel to creating templates for JMX Elements to embedding it into larger tools, there's lots to do! Check out the <a href="https://github.com/vinodkd/jmx.js#contributing"> Contributing section of the README</a> and/or the <a href="https://github.com/vinodkd/jmx.js/blob/master/docs/devguide.md"> Dev Guide</a></p>
+	</div>
 </body>
 </html>
