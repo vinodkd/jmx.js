@@ -25,6 +25,7 @@ Status
 
 See the [Development Journal](docs/journal.md) for the latest development status. Below is a list of high level milestones reached.
 
+* **Dec-18-2013 18:26 : v1.0** Released with User Guide, Developer Guide and Demo. 
 * **Dec-13-2013 : v1.0** "All basic features available" Release: Relatively stable editor for JMX files with ability to edit elements that are not yet mapped in their raw form.
 * **Oct-26-2013 :** Basic load-edit-save cycle working for one sample jmx file.
 
