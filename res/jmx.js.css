@@ -12,7 +12,10 @@ form{
 }
 
 .jmxElement {
-	border: lightblue 1px dashed;
+	border-top: lightblue 1px dashed;
+	border-left: lightblue 1px dashed;
+	border-right: lightblue 1px dashed;
+	border-radius:5px;
 }
 
 img.icon {
